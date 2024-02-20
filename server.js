@@ -46,6 +46,7 @@ app.post('/api/maria/image', upload.single('file'), async (req, res) => {
 });
 
 async function handleImageRequest(request_body) {
+  const dbapi_insert_url = "http://127.0.0.1:8080/api/request/insert";
 
   if (!('data' in request_body)) {
     return ERROR;
@@ -70,7 +71,25 @@ async function handleImageRequest(request_body) {
     return ERROR    
   }
 
-  // check if the token is valid in DB
+  fetch(dbapi_insert_url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+
+  }).then(response => {
+    console.log("waiting response");
+    if(!response.ok) {
+      console.log('Error: connecting to dbAPI');
+    }
+    return response;
+
+  }).then (data => {
+    console.log(data);
+
+  })
+
 
   return OK;
 }
