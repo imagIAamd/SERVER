@@ -40,7 +40,7 @@ app.post('/api/maria/image', upload.single('file'), async (req, res) => {
 
     res.status(200).json({ message: 'Request processed successfully' });
   } catch (error) {
-    console.error('Error processing request:', error);
+    console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
@@ -86,9 +86,44 @@ async function handleImageRequest(request_body) {
     return response;
 
   }).then (data => {
-    console.log(data);
-
+    console.log("response received");
   })
+
+  const requestBody = {
+    model: 'llava',
+    images: [request_body.images],
+    prompt: 'Describe the images.'
+  };
+
+  const requestBodyJSON = JSON.stringify(requestBody);
+  console.log("about to try to access llava")
+  let response = await fetch('http://localhost:11434/api/generate', {
+    method: 'POST',
+    mode: "cors",
+    cache: "no-cache",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: requestBodyJSON,
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+  res.contentType('application/json');
+
+  const reader = response.body.getReader();
+  while (true) {
+    const { done, value } = await reader.read();
+
+    if (done || !running) {
+      res.destroy();
+      break;
+    }
+    const jsonData = JSON.parse(new TextDecoder().decode(value));
+    console.log(jsonData)    
+    res.write(JSON.stringify(jsonData) + '\n');
+  }
 
 
   return OK;
