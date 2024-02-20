@@ -14,7 +14,7 @@ app.use(express.static('public'));
 app.use(express.json({ limit: '10mb' }));
 
 const httpServer = app.listen(port, () => {
-  console.log(`Listening for HTTP queries on: http://localhost:${port}`);
+  console.log(`Listening for HTTP queries on: http://localhost:1134`);
 });
 
 process.on('SIGTERM', shutDown);
@@ -71,7 +71,32 @@ async function handleImageRequest(request_body) {
     return ERROR    
   }
 
-  fetch(dbapi_insert_url, {
+  const requestBody = {
+    model: "llava",
+    images: [request_body.images],
+    prompt: "Describe the images"
+  };
+
+  const requestBodyJSON = JSON.stringify(requestBody);
+
+  try {
+    await fetch('http://localhost:11434/api/generate', {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: requestBodyJSON
+
+  }).then(response => {
+    console.log(response);
+    if (response.status == OK) {
+      return response.body
+    } 
+  }).then(body => {
+    console.log(body);
+  });
+
+  await fetch(dbapi_insert_url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -79,52 +104,17 @@ async function handleImageRequest(request_body) {
     body: JSON.stringify(data)
 
   }).then(response => {
-    console.log("waiting response");
     if(!response.ok) {
       console.log('Error: connecting to dbAPI');
     }
     return response;
 
   }).then (data => {
-    console.log("response received");
+    
   })
-
-  const requestBody = {
-    model: 'llava',
-    images: [request_body.images],
-    prompt: 'Describe the images.'
-  };
-
-  const requestBodyJSON = JSON.stringify(requestBody);
-  console.log("about to try to access llava")
-  let response = await fetch('http://localhost:11434/api/generate', {
-    method: 'POST',
-    mode: "cors",
-    cache: "no-cache",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: requestBodyJSON,
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status}`);
+  } catch (error)  {
+    console.log(error);
   }
-  res.contentType('application/json');
-
-  const reader = response.body.getReader();
-  while (true) {
-    const { done, value } = await reader.read();
-
-    if (done || !running) {
-      res.destroy();
-      break;
-    }
-    const jsonData = JSON.parse(new TextDecoder().decode(value));
-    console.log(jsonData)    
-    res.write(JSON.stringify(jsonData) + '\n');
-  }
-
 
   return OK;
 }
