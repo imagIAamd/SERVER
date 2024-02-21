@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -50,7 +50,7 @@ app.post('/api/maria/image', upload.single('file'), async (req, res) => {
 
     const requestBodyJSON = JSON.stringify(requestBody);
 
-    const responseGenerate = await fetch('http://localhost:11434/api/generate', {
+    const responseGenerate = await fetch('http://192.168.1.14:11434/api/generate', {
       method: 'POST',
       mode: "cors",
       cache: "no-cache",
