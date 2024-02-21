@@ -14,7 +14,7 @@ app.use(express.static('public'));
 app.use(express.json({ limit: '10mb' }));
 
 const httpServer = app.listen(port, () => {
-  console.log(`Listening for HTTP queries on: http://localhost:3000`);
+  console.log(`Listening for HTTP queries on: http://localhost:80`);
 });
 
 process.on('SIGTERM', shutDown);
@@ -27,6 +27,8 @@ function shutDown() {
     process.exit(0);
   });
 }
+
+
 
 app.post('/api/maria/image', upload.single('file'), async (req, res) => {
   try {
