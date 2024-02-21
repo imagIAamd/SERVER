@@ -4,7 +4,7 @@ const multer = require('multer');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const storage = multer.memoryStorage(); // Save the file to memory
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 const ERROR = 400;
@@ -14,7 +14,7 @@ app.use(express.static('public'));
 app.use(express.json({ limit: '10mb' }));
 
 const httpServer = app.listen(port, () => {
-  console.log(`Listening for HTTP queries on: http://localhost:1134`);
+  console.log(`Listening for HTTP queries on: http://localhost:3000`);
 });
 
 process.on('SIGTERM', shutDown);
@@ -29,23 +29,75 @@ function shutDown() {
 }
 
 app.post('/api/maria/image', upload.single('file'), async (req, res) => {
-
   try {
     const request_body = req.body;
-    let response = await handleImageRequest(request_body);
+    let images = [];
 
-    if (response !== OK) {
-      throw ERROR;
+    if (Array.isArray(request_body.data.images)) {
+      for (let i = 0; i < request_body.data.images.length; i++) {
+        let imageUrl = request_body.data.images[i].image;
+        images.push(imageUrl);
+      }
+    } else {
+      console.error("data.images is not an array");
     }
 
-    res.status(200).json({ message: 'Request processed successfully' });
+    const requestBody = {
+      model: "llava",
+      images: images,
+      prompt: "Describe the images"
+    };
+
+    const requestBodyJSON = JSON.stringify(requestBody);
+
+    const responseGenerate = await fetch('http://localhost:11434/api/generate', {
+      method: 'POST',
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: requestBodyJSON,
+    });
+
+    if (!responseGenerate.ok) {
+      throw new Error(`HTTP error! Status: ${responseGenerate.status}`);
+    }
+
+    res.contentType('application/json');
+
+    const reader = responseGenerate.body.getReader();
+
+    let aggregatedResponse = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+
+      if (done) {
+        break;
+      }
+
+      const jsonData = JSON.parse(new TextDecoder().decode(value));
+      aggregatedResponse += jsonData.response;
+    }
+
+    if (!res.headersSent) {
+      const responseInsert = await saveRequest(req.body);
+
+      if (responseInsert !== OK) {
+        throw ERROR;
+      }
+      res.status(200).json({ message: 'Request processed successfully', aggregatedResponse });
+    }
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error(error);
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 });
 
-async function handleImageRequest(request_body) {
+async function saveRequest(request_body) {
   const dbapi_insert_url = "http://127.0.0.1:8080/api/request/insert";
 
   if (!('data' in request_body)) {
@@ -53,48 +105,22 @@ async function handleImageRequest(request_body) {
   }
 
   const data = request_body.data;
-  console.log(data);
 
   if (!('prompt' in data && 'token' in data && 'images' in data) && Object.keys(data).length === 3) {
     return ERROR;
   }
 
   if (typeof(data.prompt) !== 'string') {
-    return ERROR    
+    return ERROR
   }
 
   if (typeof(data.token) !== 'string') {
-    return ERROR    
+    return ERROR
   }
 
   if (!(Array.isArray(data.images))) {
-    return ERROR    
+    return ERROR
   }
-
-  const requestBody = {
-    model: "llava",
-    images: [request_body.images],
-    prompt: "Describe the images"
-  };
-
-  const requestBodyJSON = JSON.stringify(requestBody);
-
-  try {
-    await fetch('http://localhost:11434/api/generate', {
-    method: 'POST',
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: requestBodyJSON
-
-  }).then(response => {
-    console.log(response);
-    if (response.status == OK) {
-      return response.body
-    } 
-  }).then(body => {
-    console.log(body);
-  });
 
   await fetch(dbapi_insert_url, {
     method: 'POST',
@@ -102,19 +128,14 @@ async function handleImageRequest(request_body) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data)
-
   }).then(response => {
     if(!response.ok) {
       console.log('Error: connecting to dbAPI');
     }
     return response;
-
   }).then (data => {
     
   })
-  } catch (error)  {
-    console.log(error);
-  }
 
   return OK;
 }
