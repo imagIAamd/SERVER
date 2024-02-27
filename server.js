@@ -235,3 +235,36 @@ function isValidUser(body) {
 
   return true;
 }
+
+// API endpoint for user validation
+app.post('/api/maria/user/validate', upload.single('file'), processUserValidation);
+
+async function processUserValidation(req, res) {
+  try {
+    const request_body = req.body;
+    const validateUser = fetch('http://127.0.0.1:8080/api/user/validate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'phone_number': request_body.phone_number,
+          'validation_code': request_body.validation_code
+        })
+      });
+      
+      if (!((await validateUser).ok)) {
+        throw new Error('Error inserting tmp user');
+      }
+
+      if (!res.headersSent) {
+        res.status(200).json((await validateUser).body);
+      }    
+
+  } catch (error) {
+    console.error(error);
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }  
+  }
+}
