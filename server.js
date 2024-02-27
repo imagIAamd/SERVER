@@ -216,6 +216,9 @@ async function processUserRegistration(req, res) {
       throw new Error('Error inserting tmp user');
     }
 
+    if (!res.headersSent) {
+      res.status(200).json({ status: 'OK', message: "Waiting validation" });
+    }
 
   } catch (error) {
     console.error(error);
