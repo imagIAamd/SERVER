@@ -187,8 +187,8 @@ async function processUserRegistration(req, res) {
       throw new Error('missing body parameters.');
     }
     */
-
-    const requestSMS = fetch('http://192.168.1.16:8000/api/sendsms/?api_token=' + SMS_TOKEN + '&username=ams26&text=marIA code&receiver=' + request_body.phone_number, {
+    const randomNumber = Math.floor(1000 + Math.random() * 9000);
+    const requestSMS = fetch('http://192.168.1.16:8000/api/sendsms/?api_token=' + SMS_TOKEN + '&username=ams26&text=' + randomNumber + '&receiver=' + request_body.phone_number, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -199,16 +199,17 @@ async function processUserRegistration(req, res) {
       throw new Error('Error sending SMS');
     }
     
-    const registerUser = fetch('http://127.0.0.1:8080/api/request/insert', {
+    const registerUser = fetch('http://127.0.0.1:8080/api/user/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: {
+      body: JSON.stringify({
         'phone_number': request_body.phone_number,
         'nickname': request_body.nickname,
         'email': request_body.email,
-      }
+        'validation_code': randomNumber
+      })
     });
     
     if (!((await registerUser).ok)) {
