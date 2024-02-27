@@ -2,21 +2,27 @@ const express = require('express');
 const multer = require('multer');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 
+// Multer setup
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+// Constants
 const ERROR = 400;
 const OK = 200;
+const SMS_TOKEN = '1mXCtEBqKYcr96XvW1EoN5xqLcvnE5CepzyMmYNV8YpYpkq9pvOYBDqbrb4zwkT9';
 
+// Middleware
 app.use(express.static('public'));
 app.use(express.json({ limit: '10mb' }));
 
+// Server setup
 const httpServer = app.listen(port, () => {
-  console.log(`Listening for HTTP queries on: http://localhost:3000`);
+  console.log(`Listening for HTTP queries on: http://localhost:80`);
 });
 
+// Graceful shutdown on SIGTERM or SIGINT
 process.on('SIGTERM', shutDown);
 process.on('SIGINT', shutDown);
 
@@ -28,9 +34,10 @@ function shutDown() {
   });
 }
 
+// API endpoint for processing images
+app.post('/api/maria/image', upload.single('file'), processImageRequest);
 
-
-app.post('/api/maria/image', upload.single('file'), async (req, res) => {
+async function processImageRequest(req, res) {
   try {
     const request_body = req.body;
     let images = [];
@@ -52,8 +59,15 @@ app.post('/api/maria/image', upload.single('file'), async (req, res) => {
 
     const requestBodyJSON = JSON.stringify(requestBody);
 
-    console.log("Incoming authorization: " + req.header("Authorization"));
+    // Save request to the database
     const requestInsert = await saveRequest(req.body, req.header("Authorization"));
+
+    if (requestInsert !== OK) {
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Waiting for Ollama to respond');
     const responseGenerate = await fetch('http://localhost:11434/api/generate', {
       method: 'POST',
       mode: "cors",
@@ -71,7 +85,6 @@ app.post('/api/maria/image', upload.single('file'), async (req, res) => {
     res.contentType('application/json');
 
     const reader = responseGenerate.body.getReader();
-
     let aggregatedResponse = "";
 
     while (true) {
@@ -86,7 +99,8 @@ app.post('/api/maria/image', upload.single('file'), async (req, res) => {
     }
 
     if (!res.headersSent) {
-      responseInsert = await saveResponse(res.getHeader("Authorization"));
+      console.log(res.body.data);
+      const responseInsert = await saveResponse(res.getHeader("authorization"), res.body.data, aggregatedResponse);
 
       if (responseInsert !== OK) {
         throw ERROR;
@@ -99,8 +113,9 @@ app.post('/api/maria/image', upload.single('file'), async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
-});
+}
 
+// Save request to the database
 async function saveRequest(request_body, authorization) {
   const dbapi_insert_url = "http://127.0.0.1:8080/api/request/insert";
 
@@ -114,16 +129,8 @@ async function saveRequest(request_body, authorization) {
     return ERROR;
   }
 
-  if (typeof(data.prompt) !== 'string') {
-    return ERROR
-  }
-
-  if (typeof(data.token) !== 'string') {
-    return ERROR
-  }
-
-  if (!(Array.isArray(data.images))) {
-    return ERROR
+  if (typeof(data.prompt) !== 'string' || typeof(data.token) !== 'string' || !Array.isArray(data.images)) {
+    return ERROR;
   }
 
   await fetch(dbapi_insert_url, {
@@ -134,17 +141,17 @@ async function saveRequest(request_body, authorization) {
     },
     body: JSON.stringify(data)
   }).then(response => {
-    if(!response.ok) {
+    if (!response.ok) {
       console.log('Error: connecting to dbAPI');
     }
     return response;
-  }).then (data => {
-    
-  })
+  });
 
+  console.log('Request inserted successfully');
   return OK;
 }
 
+// Save response to the database
 async function saveResponse(access_key, id, text) {
   const dbapi_insert_url = "http://127.0.0.1:8080/api/response/insert";
 
@@ -154,18 +161,64 @@ async function saveResponse(access_key, id, text) {
       'Content-Type': 'application/json',
       'Authorization': access_key
     },
-    body: {
+    body: JSON.stringify({
       'request_id': id,
       'text': text
-    }
+    })
   }).then(response => {
-    if(!response.ok) {
+    if (!response.ok) {
       console.log('Error: connecting to dbAPI');
     }
     return response;
-  }).then (data => {
-    
-  })
+  });
 
+  console.log('Response inserted successfully');
   return OK;
+}
+
+// API endpoint for user registration
+app.post('/api/maria/user/register', upload.single('file'), processUserRegistration);
+
+async function processUserRegistration(req, res) {
+  try {
+    const request_body = req.body;
+    /*
+    if (!(isValidUser(request_body))) {
+      throw new Error('missing body parameters.');
+    }
+    */
+
+    const requestSMS = fetch('http://192.168.1.16:8000/api/sendsms/?api_token=' + SMS_TOKEN + '&username=ams26&text=marIA code&receiver=' + request_body.phone_number, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    /*
+    const registerUser = fetch('http://127.0.0.1:8080/api/request/insert', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {
+        'phone_number': request_body.phone_number,
+        'nickname': request_body.nickname,
+        'email': request_body.email,
+      }
+    });
+    */
+
+  } catch (error) {
+    console.error(error);
+    
+  }
+}
+
+function isValidUser(body) {
+  if (!('nickname' in body && 'email' in body && 'phone_number' in body)) {
+    return false;
+  }
+
+  return true;
 }
