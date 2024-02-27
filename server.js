@@ -195,7 +195,10 @@ async function processUserRegistration(req, res) {
       }
     });
 
-    /*
+    if (!(await requestSMS).ok) {
+      throw new Error('Error sending SMS');
+    }
+    
     const registerUser = fetch('http://127.0.0.1:8080/api/request/insert', {
       method: 'POST',
       headers: {
@@ -207,11 +210,17 @@ async function processUserRegistration(req, res) {
         'email': request_body.email,
       }
     });
-    */
+    
+    if (!((await registerUser).ok)) {
+      throw new Error('Error inserting tmp user');
+    }
+
 
   } catch (error) {
     console.error(error);
-    
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }    
   }
 }
 
