@@ -257,9 +257,47 @@ async function processUserValidation(req, res) {
         throw new Error('Error inserting tmp user');
       }
 
+      const responseBody = await validateUser.json();
+
       if (!res.headersSent) {
         console.log(validateUser);
         res.status(200).json(validateUser.body);
+      }    
+
+  } catch (error) {
+    console.error(error);
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }  
+  }
+}
+
+
+app.post('/api/maria/user/login', upload.single('file'), processUserLogin);
+
+async function processUserLogin(req, res) {
+  try {
+    const request_body = req.body;
+    const userLogin = await fetch('http://127.0.0.1:8080/api/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'email': request_body.email,
+          'password': request_body.password
+        })
+      });
+      
+      if (!(userLogin.ok)) {
+        throw new Error('Error during login');
+      }
+
+      const responseBody = await userLogin.json();
+    
+      if (!res.headersSent) {
+        console.log(userLogin);
+        res.status(200).json(userLogin.body);
       }    
 
   } catch (error) {
