@@ -242,7 +242,7 @@ app.post('/api/maria/user/validate', upload.single('file'), processUserValidatio
 async function processUserValidation(req, res) {
   try {
     const request_body = req.body;
-    const validateUser = fetch('http://127.0.0.1:8080/api/user/validate', {
+    const validateUser = await fetch('http://127.0.0.1:8080/api/user/validate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -253,12 +253,13 @@ async function processUserValidation(req, res) {
         })
       });
       
-      if (!((await validateUser).ok)) {
+      if (!(validateUser.ok)) {
         throw new Error('Error inserting tmp user');
       }
 
       if (!res.headersSent) {
-        res.status(200).json((await validateUser).body);
+        console.log(validateUser);
+        res.status(200).json(validateUser.body);
       }    
 
   } catch (error) {
