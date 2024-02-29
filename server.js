@@ -62,11 +62,6 @@ async function processImageRequest(req, res) {
     // Save request to the database
     const requestInsert = await saveRequest(req.body, req.header("Authorization"));
 
-    if (requestInsert !== OK) {
-      res.status(500).json({ error: 'Internal Server Error' });
-      return;
-    }
-
     console.log('Waiting for Ollama to respond');
     const responseGenerate = await fetch('http://192.168.1.14:11434/api/generate', {
       method: 'POST',
@@ -133,6 +128,7 @@ async function saveRequest(request_body, authorization) {
   });
 
   console.log('Request inserted successfully');
+  console.log(api_response.json());
   return api_response.json();
 }
 
