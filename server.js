@@ -99,7 +99,7 @@ async function processImageRequest(req, res) {
     }
 
     if (!res.headersSent) {
-      const responseInsert = await saveResponse(res.getHeader("authorization"), res.body.data, aggregatedResponse);
+      const responseInsert = await saveResponse(res.getHeader("authorization"), requestInsert.id, aggregatedResponse);
 
       if (responseInsert !== OK) {
         throw ERROR;
@@ -129,6 +129,7 @@ async function saveRequest(request_body, authorization) {
     if (!response.ok) {
       console.log('Error: connecting to dbAPI');
     }
+    console.log(response.body);
     return response;
   });
 
