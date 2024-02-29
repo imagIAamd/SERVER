@@ -128,8 +128,8 @@ async function saveRequest(request_body, authorization) {
   });
 
   console.log('Request inserted successfully');
-  console.log(api_response.json());
-  return api_response.json();
+  console.log(await api_response.json());
+  return await api_response.json();
 }
 
 // Save response to the database
