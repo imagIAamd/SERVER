@@ -68,7 +68,7 @@ async function processImageRequest(req, res) {
     }
 
     console.log('Waiting for Ollama to respond');
-    const responseGenerate = await fetch('http://192.168.1.16:11434/api/generate', {
+    const responseGenerate = await fetch('http://192.168.1.14:11434/api/generate', {
       method: 'POST',
       mode: "cors",
       cache: "no-cache",
