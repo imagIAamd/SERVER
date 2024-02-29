@@ -42,9 +42,9 @@ async function processImageRequest(req, res) {
     const request_body = req.body;
     let images = [];
 
-    if (Array.isArray(request_body.data.images)) {
-      for (let i = 0; i < request_body.data.images.length; i++) {
-        let imageUrl = request_body.data.images[i].image;
+    if (Array.isArray(request_body.images)) {
+      for (let i = 0; i < request_body.images.length; i++) {
+        let imageUrl = request_body.images[i].image;
         images.push(imageUrl);
       }
     } else {
@@ -79,7 +79,7 @@ async function processImageRequest(req, res) {
     });
 
     if (!responseGenerate.ok) {
-      throw new Error(`HTTP error! Status: ${responseGenerate.status}`);
+      throw new Error(`Error`);
     }
 
     res.contentType('application/json');
@@ -118,20 +118,6 @@ async function processImageRequest(req, res) {
 // Save request to the database
 async function saveRequest(request_body, authorization) {
   const dbapi_insert_url = "http://127.0.0.1:8080/api/request/insert";
-
-  if (!('data' in request_body)) {
-    return ERROR;
-  }
-
-  const data = request_body.data;
-
-  if (!('prompt' in data && 'token' in data && 'images' in data) && Object.keys(data).length === 3) {
-    return ERROR;
-  }
-
-  if (typeof(data.prompt) !== 'string' || typeof(data.token) !== 'string' || !Array.isArray(data.images)) {
-    return ERROR;
-  }
 
   await fetch(dbapi_insert_url, {
     method: 'POST',
