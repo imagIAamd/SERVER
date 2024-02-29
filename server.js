@@ -60,7 +60,8 @@ async function processImageRequest(req, res) {
     const requestBodyJSON = JSON.stringify(requestBody);
 
     // Save request to the database
-    const requestInsert = await saveRequest(req.body, req.header("Authorization"));
+    const auth = req.header("Authorization");
+    const requestInsert = await saveRequest(req.body, auth);
 
     console.log('Waiting for Ollama to respond');
     const responseGenerate = await fetch('http://192.168.1.14:11434/api/generate', {
@@ -94,7 +95,8 @@ async function processImageRequest(req, res) {
     }
 
     if (!res.headersSent) {
-      const responseInsert = await saveResponse(req.header("Authorization"), requestInsert.id, aggregatedResponse);
+      console.log("authorization: " + auth);
+      const responseInsert = await saveResponse(auth, requestInsert.id, aggregatedResponse);
 
       if (responseInsert !== OK) {
         throw ERROR;
