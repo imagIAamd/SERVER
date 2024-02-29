@@ -124,7 +124,7 @@ async function saveRequest(request_body, authorization) {
       'Content-Type': 'application/json',
       'Authorization': authorization
     },
-    body: JSON.stringify(request_body);
+    body: JSON.stringify(request_body)
   }).then(response => {
     if (!response.ok) {
       console.log('Error: connecting to dbAPI');
