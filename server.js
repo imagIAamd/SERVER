@@ -129,8 +129,8 @@ async function saveRequest(request_body, authorization) {
     if (!response.ok) {
       console.log('Error: connecting to dbAPI');
     }
-    console.log(response.body);
-    return response;
+    console.log(response.body.json());
+    return response.json();
   });
 
   console.log('Request inserted successfully');
