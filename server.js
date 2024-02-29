@@ -94,7 +94,7 @@ async function processImageRequest(req, res) {
     }
 
     if (!res.headersSent) {
-      const responseInsert = await saveResponse(res.getHeader("authorization"), requestInsert.id, aggregatedResponse);
+      const responseInsert = await saveResponse(req.header("Authorization"), requestInsert.id, aggregatedResponse);
 
       if (responseInsert !== OK) {
         throw ERROR;
