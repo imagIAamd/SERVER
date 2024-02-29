@@ -118,7 +118,7 @@ async function processImageRequest(req, res) {
 async function saveRequest(request_body, authorization) {
   const dbapi_insert_url = "http://127.0.0.1:8080/api/request/insert";
 
-  await fetch(dbapi_insert_url, {
+  const api_response = await fetch(dbapi_insert_url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -129,12 +129,11 @@ async function saveRequest(request_body, authorization) {
     if (!response.ok) {
       console.log('Error: connecting to dbAPI');
     }
-    console.log(response.body.json());
-    return response.json();
+    return response;
   });
 
   console.log('Request inserted successfully');
-  return OK;
+  return api_response.json();
 }
 
 // Save response to the database
