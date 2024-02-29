@@ -98,8 +98,7 @@ async function processImageRequest(req, res) {
       aggregatedResponse += jsonData.response;
     }
 
-    if (!res.headersSent) {
-      console.log(res.body.data);
+    if (!res.headersSent) {<
       const responseInsert = await saveResponse(res.getHeader("authorization"), res.body.data, aggregatedResponse);
 
       if (responseInsert !== OK) {
