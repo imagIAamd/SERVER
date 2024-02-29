@@ -137,6 +137,7 @@ async function saveRequest(request_body, authorization) {
 // Save response to the database
 async function saveResponse(access_key, id, text) {
   const dbapi_insert_url = "http://127.0.0.1:8080/api/response/insert";
+  console.log(access_key);
 
   await fetch(dbapi_insert_url, {
     method: 'POST',
