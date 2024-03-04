@@ -102,7 +102,7 @@ const logFormat = winston.format.combine(
               'validation_code': request_body.validation_code
             })});
 
-            validateUser.then(request => {
+            validateUser.then(response => {
                 if (!response.ok) {
                     logger.error(`Validate user request returned error code: ${response.status}`);
                     res.send(response.json());
