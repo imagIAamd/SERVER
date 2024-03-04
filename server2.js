@@ -92,7 +92,7 @@ const logFormat = winston.format.combine(
     app.post('/api/maria/user/validate', upload.single('file'), async function (req, res) {
         try {
             const request_body = req.body;
-            const validateUser = await fetch('http://127.0.0.1:8080/api/user/validate', {
+            const validateUser = fetch('http://127.0.0.1:8080/api/user/validate', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
