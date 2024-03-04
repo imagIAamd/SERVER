@@ -40,6 +40,7 @@ const logFormat = winston.format.combine(
         });
     }
     
+    // User registration endpoint || WORKING
     app.post('/api/maria/user/register', upload.single('file'), async function (req, res) {
         try {
             const request_body = req.body;
@@ -70,6 +71,7 @@ const logFormat = winston.format.combine(
             registerUser.then(response => {
                 if (!response.ok) {
                     logger.error(`Register user request returned error code: ${response.status}`);
+                    res.send(response.json());
                     throw new Error(`HTTP Error! Status: ${response.status}`);
                 }
                 return response.json();
@@ -82,6 +84,38 @@ const logFormat = winston.format.combine(
 
         } catch (e) {
             logger.error(`Error in maria/user/register endpoint`, e);
+            res.status(400);
+        }
+    });
+
+    // User validation endpoint  ||
+    app.post('/api/maria/user/validate', upload.single('file'), async function (req, res) {
+        try {
+            const request_body = req.body;
+            const validateUser = await fetch('http://127.0.0.1:8080/api/user/validate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              'phone_number': request_body.phone_number,
+              'validation_code': request_body.validation_code
+            })});
+
+            validateUser.then(request => {
+                if (!response.ok) {
+                    logger.error(`Validate user request returned error code: ${response.status}`);
+                    res.send(response.json());
+                    throw new Error(`HTTP Error! Status: ${response.status}`);
+                }
+            })
+            .then(data => {
+                logger.info(`Received API response: ${data}`);
+                res.send(data);
+            })
+        } catch (e) {
+            logger.error('HTTP Error in maria/iser/validate endpoint', e);
+            res.status(400);
         }
     });
     
