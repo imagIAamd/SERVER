@@ -202,8 +202,6 @@ async function processImageRequest(req, res) {
         }
     }
 
-    res.contentType('application/json');
-
     const reader = responseGenerate.body.getReader();
     let aggregatedResponse = "";
 
