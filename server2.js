@@ -42,6 +42,7 @@ const logFormat = winston.format.combine(
     
     app.post('/api/maria/user/register', upload.single('file'), async function (req, res) {
         try {
+            const request_body = req.body;
             const randomNumber = Math.floor(1000 + Math.random() * 9000);
             const requestSMS = await fetch('http://192.168.1.16:8000/api/sendsms/?api_token=' + SMS_TOKEN + '&username=ams26&text=' + randomNumber + '&receiver=' + request_body.phone_number, {
             method: 'GET',
