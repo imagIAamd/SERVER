@@ -183,10 +183,9 @@ async function processImageRequest(req, res) {
             const jsonData = JSON.parse(new TextDecoder().decode(value));
             aggregatedResponse += jsonData.response;
         }
-
         if (!res.headersSent) {
             logger.info("authorization: " + auth);
-            const responseInsert = await saveResponse(auth, requestInsert.id, aggregatedResponse);
+            const responseInsert = await saveResponse(auth, requestInsert.data.id, aggregatedResponse);
 
             if (responseInsert !== 200) {
                 throw ERROR;
