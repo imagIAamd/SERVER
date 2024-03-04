@@ -183,6 +183,9 @@ async function processImageRequest(req, res) {
             const jsonData = JSON.parse(new TextDecoder().decode(value));
             aggregatedResponse += jsonData.response;
         }
+
+        logger.info(`recevied request_id: ${requestInsert}`);
+
         if (!res.headersSent) {
             logger.info("authorization: " + auth);
             const responseInsert = await saveResponse(auth, requestInsert.data.id, aggregatedResponse);
@@ -243,9 +246,7 @@ async function saveRequest(request_body, authorization) {
         return response;
     });
 
-    console.log('Request inserted successfully');
-    console.log(await api_response);
-    return await api_response;
+    return api_response.json();
 }
 
 // Save response to the database
