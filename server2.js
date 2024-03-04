@@ -53,7 +53,7 @@ const logFormat = winston.format.combine(
 
             if (!(requestSMS).ok) {
                 logger.error("Error requesting SMS code");
-                throw new Error('Error sending SMS');
+                throw Error('Error sending SMS');
             }
 
             const registerUser = fetch('http://127.0.0.1:8080/api/user/register', {
@@ -72,7 +72,7 @@ const logFormat = winston.format.combine(
                 if (!response.ok) {
                     logger.error(`Register user request returned error code: ${response.status}`);
                     res.send(response.json());
-                    throw new Error(`HTTP Error! Status: ${response.status}`);
+                    throw Error(`HTTP Error! Status: ${response.status}`);
                 }
                 return response.json();
             })
@@ -106,7 +106,7 @@ const logFormat = winston.format.combine(
                 if (!response.ok) {
                     logger.error(`Validate user request returned error code: ${response.status}`);
                     res.send(response.json());
-                    throw new Error(`HTTP Error! Status: ${response.status}`);
+                    throw Error(`HTTP Error! Status: ${response.status}`);
                 }
                 return response.json();
             })
@@ -118,6 +118,16 @@ const logFormat = winston.format.combine(
             logger.error('HTTP Error in maria/iser/validate endpoint', e);
             res.status(400);
         }
+    });
+
+    // Insert image endpoint
+    app.post('/api/maria/image', upload.single('file'), function (req, res) {
+        try {
+
+        } catch (e) {
+
+        }
+
     });
     
     
