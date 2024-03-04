@@ -145,10 +145,6 @@ app.post('/api/maria/image/insert', upload.single('file'), async function (req, 
             prompt: "Describe the images"
         };
         const requestBodyJSON = JSON.stringify(requestBody);
-
-
-
-
         const authorization = req.header("Authorization");
         logger.info(`Received authorization: ${authorization}`)
         const requestInsert = fetch("http://127.0.0.1:8080/api/request/insert", {
@@ -160,17 +156,8 @@ app.post('/api/maria/image/insert', upload.single('file'), async function (req, 
             body: JSON.stringify(request_body)
         })
 
-        let request_id;
-        requestInsert.then(response => {
-            if (!response.ok) {
-                logger.info('Error: connecting to dbAPI');
-            }
-            return response.json();
-        }).then(data => {
-            request_id = data.data.id;
-            logger.info(`DBAPI response: ${data} from which obtained request id: ${request_id}`);
-            return;
-        })
+        let data = await response.json();
+        let request_id = data.data.id;
 
         logger.log('Waiting for Ollama to respond');
         const responseGenerate = fetch('http://192.168.1.14:11434/api/generate', {
