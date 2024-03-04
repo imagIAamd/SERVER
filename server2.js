@@ -121,14 +121,75 @@ const logFormat = winston.format.combine(
     });
 
     // Insert image endpoint
-    app.post('/api/maria/image', upload.single('file'), function (req, res) {
+    app.post('/api/maria/image', upload.single('file'), async function (req, res) {
         try {
+            const request_body = req.body;
+            let images = [];
+            
+            if (Array.isArray(request_body.images)) {
+              for (let i = 0; i < request_body.images.length; i++) {
+                let imageUrl = request_body.images[i].image;
+                images.push(imageUrl);
+              }
+            } else {
+              logger.error("Received images are not in an array");
+              throw new Error();
+            }
 
+            const requestBody = {
+                model: "llava",
+                images: images,
+                prompt: "Describe the images"
+              };
+            const requestBodyJSON = JSON.stringify(requestBody);
+
+            const auth = req.header("Authorization");
+            const requestInsert = saveRequest(req.body, auth);
+            res.send((await requestInsert).json());
+            
+            /*
+            logger.log('Waiting for Ollama to respond');
+            const responseGenerate = fetch('http://192.168.1.14:11434/api/generate', {
+            method: 'POST',
+            mode: "cors",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: requestBodyJSON,
+            });
+
+            if (!responseGenerate.ok) {
+                logger.error(`Error connecting to ollama`);
+                throw new Error();
+            }
+            */
         } catch (e) {
 
         }
 
     });
+
+    async function saveRequest(request_body, authorization) {
+        const dbapi_insert_url = "http://127.0.0.1:8080/api/request/insert";
+        const api_response = await fetch(dbapi_insert_url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': authorization
+          },
+          body: JSON.stringify(request_body)
+        }).then(response => {
+          if (!response.ok) {
+            logger.info('Error: connecting to dbAPI');
+          }
+          return response;
+        });
+        
+        logger.info('Request inserted successfully');
+        logger.info(api_response);
+        return api_response;
+      }
     
     
     
