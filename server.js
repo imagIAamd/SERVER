@@ -60,26 +60,55 @@ async function processImageRequest(req, res) {
     const requestBodyJSON = JSON.stringify(requestBody);
     
     // Save request to the database
-    const requestInsert = await saveRequest(req.body, req.header("Authorization"));
-    
-    if (requestInsert !== OK) {
-      res.status(500).json({ error: 'Internal Server Error' });
-      return;
-    }
-    
+
+    const auth = req.header("Authorization");
+    const requestInsert = await saveRequest(req.body, auth);
+
     console.log('Waiting for Ollama to respond');
-    const responseGenerate = await fetch('http://localhost:11434/api/generate', {
-    method: 'POST',
-    mode: "cors",
-    cache: "no-cache",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: requestBodyJSON,
-  });
-  
-  if (!responseGenerate.ok) {
-    throw new Error(`Error`);
+    const responseGenerate = await fetch('http://192.168.1.14:11434/api/generate', {
+      method: 'POST',
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: requestBodyJSON,
+    });
+
+    if (!responseGenerate.ok) {
+      throw new Error(`Error`);
+    }
+
+    res.contentType('application/json');
+
+    const reader = responseGenerate.body.getReader();
+    let aggregatedResponse = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+
+      if (done) {
+        break;
+      }
+
+      const jsonData = JSON.parse(new TextDecoder().decode(value));
+      aggregatedResponse += jsonData.response;
+    }
+
+    if (!res.headersSent) {
+      console.log("authorization: " + auth);
+      const responseInsert = await saveResponse(auth, requestInsert.id, aggregatedResponse);
+
+      if (responseInsert !== OK) {
+        throw ERROR;
+      }
+      res.status(200).json({ message: 'Request processed successfully', aggregatedResponse });
+    }
+  } catch (error) {
+    console.error(error);
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
   
   res.contentType('application/json');
@@ -107,25 +136,18 @@ async function processImageRequest(req, res) {
     }
     res.status(200).json({ message: 'Request processed successfully', aggregatedResponse });
   }
-} catch (error) {
-  console.error(error);
-  if (!res.headersSent) {
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-}
 }
 
 // Save request to the database
 async function saveRequest(request_body, authorization) {
   const dbapi_insert_url = "http://127.0.0.1:8080/api/request/insert";
-  
-  await fetch(dbapi_insert_url, {
+  const api_response = await fetch(dbapi_insert_url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': authorization
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(request_body)
   }).then(response => {
     if (!response.ok) {
       console.log('Error: connecting to dbAPI');
@@ -134,18 +156,19 @@ async function saveRequest(request_body, authorization) {
   });
   
   console.log('Request inserted successfully');
-  return OK;
+  console.log(await api_response);
+  return await api_response;
 }
 
 // Save response to the database
 async function saveResponse(access_key, id, text) {
   const dbapi_insert_url = "http://127.0.0.1:8080/api/response/insert";
-  
+  console.log(access_key);
   await fetch(dbapi_insert_url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': access_key
+      'Authorization': 'Bearer ' + access_key
     },
     body: JSON.stringify({
       'request_id': id,
