@@ -88,7 +88,7 @@ const logFormat = winston.format.combine(
         }
     });
 
-    // User validation endpoint  ||
+    // User validation endpoint  || WORKING
     app.post('/api/maria/user/validate', upload.single('file'), async function (req, res) {
         try {
             const request_body = req.body;
@@ -108,6 +108,7 @@ const logFormat = winston.format.combine(
                     res.send(response.json());
                     throw new Error(`HTTP Error! Status: ${response.status}`);
                 }
+                return response.json();
             })
             .then(data => {
                 logger.info(`Received API response: ${data}`);
