@@ -143,11 +143,35 @@ const logFormat = winston.format.combine(
               };
             const requestBodyJSON = JSON.stringify(requestBody);
 
-            const auth = req.header("Authorization");
-            const requestInsert = saveRequest(req.body, auth);
-            res.send((await requestInsert).json());
+
+
+
+            const authorization = req.header("Authorization");
+            logger.info(`Received authorization: ${authorization}`)
+            const requestInsert = fetch("http://127.0.0.1:8080/api/request/insert", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': authorization
+                },
+                body: JSON.stringify(request_body)
+                })
+                
+                let request_id;
+                requestInsert.then(response => {
+                    if (!response.ok) {
+                        logger.info('Error: connecting to dbAPI');
+                    }
+                    return response.json();
+                }).then(data => {
+                    logger.info(`DBAPI response: ${data}`);
+                    request_id = data.data.id;
+                });
             
-            /*
+            logger.info('Request inserted successfully');
+            logger.info(api_response);
+            
+            
             logger.log('Waiting for Ollama to respond');
             const responseGenerate = fetch('http://192.168.1.14:11434/api/generate', {
             method: 'POST',
@@ -163,7 +187,30 @@ const logFormat = winston.format.combine(
                 logger.error(`Error connecting to ollama`);
                 throw new Error();
             }
-            */
+            res.contentType('application/json');
+
+            const reader = responseGenerate.body.getReader();
+            let aggregatedResponse = "";
+
+            while (true) {
+            const { done, value } = await reader.read();
+
+            if (done) {
+                break;
+            }
+
+            const jsonData = JSON.parse(new TextDecoder().decode(value));
+            aggregatedResponse += jsonData.response;
+            }
+
+            if (!res.headersSent) {
+
+                if (responseInsert !== OK) {
+                    throw ERROR;
+                }
+            res.status(200).json({ message: 'Request processed successfully', aggregatedResponse });
+            }
+
         } catch (e) {
 
         }
