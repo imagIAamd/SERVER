@@ -158,8 +158,11 @@ app.post('/api/maria/image/insert', upload.single('file'), async function (req, 
 
         let data = await response.json();
         let request_id = data.data.id;
+        logger.info(`Received request_id: ${request_id}`);
 
-        logger.log('Waiting for Ollama to respond');
+        res.send(request_id);
+
+        logger.info('Waiting for Ollama to respond');
         const responseGenerate = fetch('http://192.168.1.14:11434/api/generate', {
             method: 'POST',
             mode: "cors",
