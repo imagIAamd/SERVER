@@ -156,7 +156,7 @@ app.post('/api/maria/image/insert', upload.single('file'), async function (req, 
             body: JSON.stringify(request_body)
         })
 
-        let data = await response.json();
+        let data = await requestInsert.json();
         let request_id = data.data.id;
         logger.info(`Received request_id: ${request_id}`);
 
