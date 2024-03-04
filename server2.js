@@ -201,30 +201,6 @@ async function processImageRequest(req, res) {
             res.status(500).json({ error: 'Internal Server Error' });
         }
     }
-
-    const reader = responseGenerate.body.getReader();
-    let aggregatedResponse = "";
-
-    while (true) {
-        const { done, value } = await reader.read();
-
-        if (done) {
-            break;
-        }
-
-        const jsonData = JSON.parse(new TextDecoder().decode(value));
-        aggregatedResponse += jsonData.response;
-    }
-
-    if (!res.headersSent) {
-        console.log(res.body.data);
-        const responseInsert = await saveResponse(res.getHeader("authorization"), res.body.data, aggregatedResponse);
-
-        if (responseInsert !== 200) {
-            throw ERROR;
-        }
-        res.status(200).json({ message: 'Request processed successfully', aggregatedResponse });
-    }
 }
 
 // Save request to the database
