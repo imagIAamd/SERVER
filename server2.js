@@ -124,7 +124,9 @@ app.post('/api/maria/user/validate', upload.single('file'), async function (req,
 });
 
 // Insert image endpoint
-app.post('/api/maria/image/insert', upload.single('file'), async function (req, res) {
+app.post('/api/maria/image', upload.single('file'), processImageRequest);
+
+async function processImageRequest(req, res) {
     try {
         const request_body = req.body;
         let images = [];
@@ -135,8 +137,7 @@ app.post('/api/maria/image/insert', upload.single('file'), async function (req, 
                 images.push(imageUrl);
             }
         } else {
-            logger.error("Received images are not in an array");
-            throw new Error();
+            logger.error("data.images is not an array");
         }
 
         const requestBody = {
@@ -144,26 +145,16 @@ app.post('/api/maria/image/insert', upload.single('file'), async function (req, 
             images: images,
             prompt: "Describe the images"
         };
+
         const requestBodyJSON = JSON.stringify(requestBody);
-        const authorization = req.header("Authorization");
-        logger.info(`Received authorization: ${authorization}`)
-        const requestInsert = fetch("http://127.0.0.1:8080/api/request/insert", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': authorization
-            },
-            body: JSON.stringify(request_body)
-        })
 
-        let data = await requestInsert.json();
-        let request_id = data.data.id;
-        logger.info(`Received request_id: ${request_id}`);
+        // Save request to the database
 
-        res.send(request_id);
+        const auth = req.header("Authorization");
+        const requestInsert = await saveRequest(req.body, auth);
 
         logger.info('Waiting for Ollama to respond');
-        const responseGenerate = fetch('http://192.168.1.14:11434/api/generate', {
+        const responseGenerate = await fetch('http://192.168.1.14:11434/api/generate', {
             method: 'POST',
             mode: "cors",
             cache: "no-cache",
@@ -174,9 +165,9 @@ app.post('/api/maria/image/insert', upload.single('file'), async function (req, 
         });
 
         if (!responseGenerate.ok) {
-            logger.error(`Error connecting to ollama`);
-            throw new Error();
+            throw new Error(`Error`);
         }
+
         res.contentType('application/json');
 
         const reader = responseGenerate.body.getReader();
@@ -194,17 +185,93 @@ app.post('/api/maria/image/insert', upload.single('file'), async function (req, 
         }
 
         if (!res.headersSent) {
+            logger.info("authorization: " + auth);
+            const responseInsert = await saveResponse(auth, requestInsert.id, aggregatedResponse);
 
             if (responseInsert !== OK) {
                 throw ERROR;
             }
             res.status(200).json({ message: 'Request processed successfully', aggregatedResponse });
         }
-
-    } catch (e) {
-
+    } catch (error) {
+        console.error(error);
+        if (!res.headersSent) {
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
     }
 
-});
+    res.contentType('application/json');
+
+    const reader = responseGenerate.body.getReader();
+    let aggregatedResponse = "";
+
+    while (true) {
+        const { done, value } = await reader.read();
+
+        if (done) {
+            break;
+        }
+
+        const jsonData = JSON.parse(new TextDecoder().decode(value));
+        aggregatedResponse += jsonData.response;
+    }
+
+    if (!res.headersSent) {
+        console.log(res.body.data);
+        const responseInsert = await saveResponse(res.getHeader("authorization"), res.body.data, aggregatedResponse);
+
+        if (responseInsert !== OK) {
+            throw ERROR;
+        }
+        res.status(200).json({ message: 'Request processed successfully', aggregatedResponse });
+    }
+}
+
+// Save request to the database
+async function saveRequest(request_body, authorization) {
+    const dbapi_insert_url = "http://127.0.0.1:8080/api/request/insert";
+    const api_response = await fetch(dbapi_insert_url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': authorization
+        },
+        body: JSON.stringify(request_body)
+    }).then(response => {
+        if (!response.ok) {
+            console.log('Error: connecting to dbAPI');
+        }
+        return response;
+    });
+
+    console.log('Request inserted successfully');
+    console.log(await api_response);
+    return await api_response;
+}
+
+// Save response to the database
+async function saveResponse(access_key, id, text) {
+    const dbapi_insert_url = "http://127.0.0.1:8080/api/response/insert";
+    console.log(access_key);
+    await fetch(dbapi_insert_url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + access_key
+        },
+        body: JSON.stringify({
+            'request_id': id,
+            'text': text
+        })
+    }).then(response => {
+        if (!response.ok) {
+            console.log('Error: connecting to dbAPI');
+        }
+        return response;
+    });
+
+    console.log('Response inserted successfully');
+    return OK;
+}
 
 
