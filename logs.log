@@ -1,0 +1,2 @@
+{"level":"info","message":"Listening for HTTP queries on: http://localhost:3000","timestamp":"2024-03-04T14:41:11.297Z"}
+{"level":"info","message":"Received kill signal, shutting down gracefully","timestamp":"2024-03-04T14:41:26.890Z"}

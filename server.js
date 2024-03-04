@@ -41,7 +41,7 @@ async function processImageRequest(req, res) {
   try {
     const request_body = req.body;
     let images = [];
-
+    
     if (Array.isArray(request_body.images)) {
       for (let i = 0; i < request_body.images.length; i++) {
         let imageUrl = request_body.images[i].image;
@@ -50,75 +50,75 @@ async function processImageRequest(req, res) {
     } else {
       console.error("data.images is not an array");
     }
-
+    
     const requestBody = {
       model: "llava",
       images: images,
       prompt: "Describe the images"
     };
-
+    
     const requestBodyJSON = JSON.stringify(requestBody);
-
+    
     // Save request to the database
     const requestInsert = await saveRequest(req.body, req.header("Authorization"));
-
+    
     if (requestInsert !== OK) {
       res.status(500).json({ error: 'Internal Server Error' });
       return;
     }
-
+    
     console.log('Waiting for Ollama to respond');
     const responseGenerate = await fetch('http://localhost:11434/api/generate', {
-      method: 'POST',
-      mode: "cors",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: requestBodyJSON,
-    });
-
-    if (!responseGenerate.ok) {
-      throw new Error(`Error`);
-    }
-
-    res.contentType('application/json');
-
-    const reader = responseGenerate.body.getReader();
-    let aggregatedResponse = "";
-
-    while (true) {
-      const { done, value } = await reader.read();
-
-      if (done) {
-        break;
-      }
-
-      const jsonData = JSON.parse(new TextDecoder().decode(value));
-      aggregatedResponse += jsonData.response;
-    }
-
-    if (!res.headersSent) {
-      console.log(res.body.data);
-      const responseInsert = await saveResponse(res.getHeader("authorization"), res.body.data, aggregatedResponse);
-
-      if (responseInsert !== OK) {
-        throw ERROR;
-      }
-      res.status(200).json({ message: 'Request processed successfully', aggregatedResponse });
-    }
-  } catch (error) {
-    console.error(error);
-    if (!res.headersSent) {
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
+    method: 'POST',
+    mode: "cors",
+    cache: "no-cache",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: requestBodyJSON,
+  });
+  
+  if (!responseGenerate.ok) {
+    throw new Error(`Error`);
   }
+  
+  res.contentType('application/json');
+  
+  const reader = responseGenerate.body.getReader();
+  let aggregatedResponse = "";
+  
+  while (true) {
+    const { done, value } = await reader.read();
+    
+    if (done) {
+      break;
+    }
+    
+    const jsonData = JSON.parse(new TextDecoder().decode(value));
+    aggregatedResponse += jsonData.response;
+  }
+  
+  if (!res.headersSent) {
+    console.log(res.body.data);
+    const responseInsert = await saveResponse(res.getHeader("authorization"), res.body.data, aggregatedResponse);
+    
+    if (responseInsert !== OK) {
+      throw ERROR;
+    }
+    res.status(200).json({ message: 'Request processed successfully', aggregatedResponse });
+  }
+} catch (error) {
+  console.error(error);
+  if (!res.headersSent) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
 }
 
 // Save request to the database
 async function saveRequest(request_body, authorization) {
   const dbapi_insert_url = "http://127.0.0.1:8080/api/request/insert";
-
+  
   await fetch(dbapi_insert_url, {
     method: 'POST',
     headers: {
@@ -132,7 +132,7 @@ async function saveRequest(request_body, authorization) {
     }
     return response;
   });
-
+  
   console.log('Request inserted successfully');
   return OK;
 }
@@ -140,7 +140,7 @@ async function saveRequest(request_body, authorization) {
 // Save response to the database
 async function saveResponse(access_key, id, text) {
   const dbapi_insert_url = "http://127.0.0.1:8080/api/response/insert";
-
+  
   await fetch(dbapi_insert_url, {
     method: 'POST',
     headers: {
@@ -157,7 +157,7 @@ async function saveResponse(access_key, id, text) {
     }
     return response;
   });
-
+  
   console.log('Response inserted successfully');
   return OK;
 }
@@ -175,50 +175,50 @@ async function processUserRegistration(req, res) {
     */
     const randomNumber = Math.floor(1000 + Math.random() * 9000);
     const requestSMS = fetch('http://192.168.1.16:8000/api/sendsms/?api_token=' + SMS_TOKEN + '&username=ams26&text=' + randomNumber + '&receiver=' + request_body.phone_number, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    if (!(await requestSMS).ok) {
-      throw new Error('Error sending SMS');
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
     }
-    
-    const registerUser = fetch('http://127.0.0.1:8080/api/user/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        'phone_number': request_body.phone_number,
-        'nickname': request_body.nickname,
-        'email': request_body.email,
-        'validation_code': randomNumber
-      })
-    });
-    
-    if (!((await registerUser).ok)) {
-      throw new Error('Error inserting tmp user');
-    }
-
-    if (!res.headersSent) {
-      res.status(200).json({ status: 'OK', message: "Waiting validation" });
-    }
-
-  } catch (error) {
-    console.error(error);
-    if (!res.headersSent) {
-      res.status(500).json({ error: 'Internal Server Error' });
-    }    
+  });
+  
+  if (!(await requestSMS).ok) {
+    throw new Error('Error sending SMS');
   }
+  
+  const registerUser = fetch('http://127.0.0.1:8080/api/user/register', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    'phone_number': request_body.phone_number,
+    'nickname': request_body.nickname,
+    'email': request_body.email,
+    'validation_code': randomNumber
+  })
+});
+
+if (!((await registerUser).ok)) {
+  throw new Error('Error inserting tmp user');
+}
+
+if (!res.headersSent) {
+  res.status(200).json({ status: 'OK', message: "Waiting validation" });
+}
+
+} catch (error) {
+  console.error(error);
+  if (!res.headersSent) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }    
+}
 }
 
 function isValidUser(body) {
   if (!('nickname' in body && 'email' in body && 'phone_number' in body)) {
     return false;
   }
-
+  
   return true;
 }
 
@@ -229,33 +229,33 @@ async function processUserValidation(req, res) {
   try {
     const request_body = req.body;
     const validateUser = await fetch('http://127.0.0.1:8080/api/user/validate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          'phone_number': request_body.phone_number,
-          'validation_code': request_body.validation_code
-        })
-      });
-      
-      if (!(validateUser.ok)) {
-        throw new Error('Error inserting tmp user');
-      }
-
-      const responseBody = await validateUser.json();
-
-      if (!res.headersSent) {
-        console.log(validateUser);
-        res.status(200).json(validateUser.body);
-      }    
-
-  } catch (error) {
-    console.error(error);
-    if (!res.headersSent) {
-      res.status(500).json({ error: 'Internal Server Error' });
-    }  
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      'phone_number': request_body.phone_number,
+      'validation_code': request_body.validation_code
+    })
+  });
+  
+  if (!(validateUser.ok)) {
+    throw new Error('Error inserting tmp user');
   }
+  
+  const responseBody = await validateUser.json();
+  
+  if (!res.headersSent) {
+    console.log(validateUser);
+    res.status(200).json(validateUser.body);
+  }    
+  
+} catch (error) {
+  console.error(error);
+  if (!res.headersSent) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }  
+}
 }
 
 
@@ -265,31 +265,31 @@ async function processUserLogin(req, res) {
   try {
     const request_body = req.body;
     const userLogin = await fetch('http://127.0.0.1:8080/api/user/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          'email': request_body.email,
-          'password': request_body.password
-        })
-      });
-      
-      if (!(userLogin.ok)) {
-        throw new Error('Error during login');
-      }
-
-      const responseBody = await userLogin.json();
-    
-      if (!res.headersSent) {
-        console.log(userLogin);
-        res.status(200).json(userLogin.body);
-      }    
-
-  } catch (error) {
-    console.error(error);
-    if (!res.headersSent) {
-      res.status(500).json({ error: 'Internal Server Error' });
-    }  
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      'email': request_body.email,
+      'password': request_body.password
+    })
+  });
+  
+  if (!(userLogin.ok)) {
+    throw new Error('Error during login');
   }
+  
+  const responseBody = await userLogin.json();
+  
+  if (!res.headersSent) {
+    console.log(userLogin);
+    res.status(200).json(userLogin.body);
+  }    
+  
+} catch (error) {
+  console.error(error);
+  if (!res.headersSent) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }  
+}
 }
