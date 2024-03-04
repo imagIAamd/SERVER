@@ -169,7 +169,8 @@ app.post('/api/maria/image/insert', upload.single('file'), async function (req, 
         }).then(data => {
             request_id = data.data.id;
             logger.info(`DBAPI response: ${data} from which obtained request id: ${request_id}`);
-        });
+            return;
+        })
 
         logger.log('Waiting for Ollama to respond');
         const responseGenerate = fetch('http://192.168.1.14:11434/api/generate', {
