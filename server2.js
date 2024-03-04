@@ -121,7 +121,7 @@ const logFormat = winston.format.combine(
     });
 
     // Insert image endpoint
-    app.post('/api/maria/image', upload.single('file'), async function (req, res) {
+    app.post('/api/maria/image/insert', upload.single('file'), async function (req, res) {
         try {
             const request_body = req.body;
             let images = [];
