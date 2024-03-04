@@ -167,8 +167,8 @@ app.post('/api/maria/image/insert', upload.single('file'), async function (req, 
             }
             return response.json();
         }).then(data => {
-            logger.info(`DBAPI response: ${data}`);
             request_id = data.data.id;
+            logger.info(`DBAPI response: ${data} from which obtained request id: ${request_id}`);
         });
 
         logger.log('Waiting for Ollama to respond');
