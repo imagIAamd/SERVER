@@ -188,7 +188,7 @@ async function processImageRequest(req, res) {
             logger.info("authorization: " + auth);
             const responseInsert = await saveResponse(auth, requestInsert.id, aggregatedResponse);
 
-            if (responseInsert !== OK) {
+            if (responseInsert !== 200) {
                 throw ERROR;
             }
             res.status(200).json({ message: 'Request processed successfully', aggregatedResponse });
@@ -220,7 +220,7 @@ async function processImageRequest(req, res) {
         console.log(res.body.data);
         const responseInsert = await saveResponse(res.getHeader("authorization"), res.body.data, aggregatedResponse);
 
-        if (responseInsert !== OK) {
+        if (responseInsert !== 200) {
             throw ERROR;
         }
         res.status(200).json({ message: 'Request processed successfully', aggregatedResponse });
@@ -271,7 +271,7 @@ async function saveResponse(access_key, id, text) {
     });
 
     console.log('Response inserted successfully');
-    return OK;
+    return 200;
 }
 
 
