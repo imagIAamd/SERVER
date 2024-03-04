@@ -257,7 +257,7 @@ async function saveResponse(access_key, id, text) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + access_key
+            'Authorization': access_key
         },
         body: JSON.stringify({
             'request_id': id,
