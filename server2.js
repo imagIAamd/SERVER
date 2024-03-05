@@ -57,6 +57,7 @@ app.post('/api/maria/user/register', upload.single('file'), async function (req,
             throw Error('Error sending SMS');
         }
 
+        logger.info(`The SMS code is: ${randomNumber}`);
         const registerUser = fetch('http://127.0.0.1:8080/api/user/register', {
             method: 'POST',
             headers: {
@@ -201,6 +202,7 @@ async function processImageRequest(req, res) {
             res.status(500).json({ error: 'Internal Server Error' });
         }
     }
+
 }
 
 // Save request to the database
