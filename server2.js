@@ -126,7 +126,6 @@ app.post('/api/maria/user/validate', upload.single('file'), async function (req,
 
 // Insert image endpoint
 app.post('/api/maria/image', upload.single('file'), processImageRequest);
-
 async function processImageRequest(req, res) {
     try {
         const request_body = req.body;
@@ -204,7 +203,6 @@ async function processImageRequest(req, res) {
     }
 
 }
-
 // Save request to the database
 async function saveRequest(request_body, authorization) {
     const dbapi_insert_url = "http://127.0.0.1:8080/api/request/insert";
@@ -224,7 +222,6 @@ async function saveRequest(request_body, authorization) {
 
     return api_response.json();
 }
-
 // Save response to the database
 async function saveResponse(access_key, id, text) {
     const dbapi_insert_url = "http://127.0.0.1:8080/api/response/insert";
@@ -250,4 +247,35 @@ async function saveResponse(access_key, id, text) {
     return 200;
 }
 
+// User login endpoint
+app.post('/api/maria/user/login', upload.single('file'), async function (req, res) {
+    try {
+        const request_body = req.body;
+        const loginUser = fetch('http://127.0.0.1:8080/api/user/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'email': request_body.email,
+                'password': request_body.password
+            })
+        });
 
+        loginUser.then(response => {
+            if (!response.ok) {
+                logger.error(`Validate user request returned error code: ${response.status}`);
+                res.send(response.json());
+                throw Error(`HTTP Error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+            .then(data => {
+                logger.info(`Received API response: ${data}`);
+                res.send(data);
+            })
+    } catch (e) {
+        logger.error('HTTP Error in maria/iser/validate endpoint', e);
+        res.status(400);
+    }
+});
