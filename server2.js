@@ -47,6 +47,14 @@ function shutDown() {
 app.post('/api/maria/user/register', upload.single('file'), async function (req, res) {
     try {
         const request_body = req.body;
+        const clientIp = req.ip || req.connection.remoteAddress;
+
+        if (!('phone_number' in request_body) || !('nickname' in request_body) || !('email' in request_body)) {
+            logger.warn(`Received request with invalid body from ${clientIp}`);
+            res.status(400).json({ message: 'Bad request', status: 'BAD_REQUEST' });
+            return;
+        }
+
         const randomNumber = Math.floor(1000 + Math.random() * 9000);
         const requestSMS = await fetch('http://192.168.1.16:8000/api/sendsms/?api_token=' + SMS_TOKEN + '&username=ams26&text=' + randomNumber + '&receiver=' + request_body.phone_number, {
             method: 'GET',
@@ -57,7 +65,7 @@ app.post('/api/maria/user/register', upload.single('file'), async function (req,
 
         if (!(requestSMS).ok) {
             logger.error("Error requesting SMS code");
-            throw Error('Error sending SMS');
+            res.status(500).json({ message: 'Server error', status: 'INTERNAL_SERVER_ERROR' });
         }
 
         logger.info(`The SMS code is: ${randomNumber}`);
@@ -78,7 +86,6 @@ app.post('/api/maria/user/register', upload.single('file'), async function (req,
             if (!response.ok) {
                 logger.error(`Register user request returned error code: ${response.status}`);
                 res.send(response.json());
-                throw Error(`HTTP Error! Status: ${response.status}`);
             }
             return response.json();
         })
@@ -88,9 +95,9 @@ app.post('/api/maria/user/register', upload.single('file'), async function (req,
             })
 
 
-    } catch (e) {
-        logger.error(`Error in maria/user/register endpoint`, e);
-        res.status(400);
+    } catch (error) {
+        logger.error(`Error in maria/user/register endpoint`, error);
+        res.status(500).json({ message: 'Server error', status: 'INTERNAL_SERVER_ERROR' });
     }
 });
 
@@ -98,6 +105,14 @@ app.post('/api/maria/user/register', upload.single('file'), async function (req,
 app.post('/api/maria/user/validate', upload.single('file'), async function (req, res) {
     try {
         const request_body = req.body;
+        const clientIp = req.ip || req.connection.remoteAddress;
+
+        if (!('phone_number' in request_body) || !('validation_code' in request_body)) {
+            logger.warn(`Received request with invalid body from ${clientIp}`);
+            res.status(400).json({ message: 'Bad request', status: 'BAD_REQUEST' });
+            return;
+        }
+
         const validateUser = fetch('http://127.0.0.1:8080/api/user/validate', {
             method: 'POST',
             headers: {
@@ -113,7 +128,6 @@ app.post('/api/maria/user/validate', upload.single('file'), async function (req,
             if (!response.ok) {
                 logger.error(`Validate user request returned error code: ${response.status}`);
                 res.send(response.json());
-                throw Error(`HTTP Error! Status: ${response.status}`);
             }
             return response.json();
         })
@@ -123,15 +137,22 @@ app.post('/api/maria/user/validate', upload.single('file'), async function (req,
             })
     } catch (e) {
         logger.error('HTTP Error in maria/iser/validate endpoint', e);
-        res.status(400);
+        res.status(500).json({ message: 'Server error', status: 'INTERNAL_SERVER_ERROR' });
     }
 });
 
-// Insert image endpoint
+// Insert image endpoint || WORKING
 app.post('/api/maria/image', upload.single('file'), processImageRequest);
 async function processImageRequest(req, res) {
     try {
         const request_body = req.body;
+        const clientIp = req.ip || req.connection.remoteAddress;
+
+        if (!('prompt' in request_body) || !('model' in request_body) || !('images' in request_body)) {
+            logger.warn(`Received request with invalid body from ${clientIp}`);
+            res.status(400).json({ message: 'Bad request', status: 'BAD_REQUEST' });
+            return;
+        }
         let images = [];
 
         if (Array.isArray(request_body.images)) {
@@ -168,7 +189,8 @@ async function processImageRequest(req, res) {
         });
 
         if (!responseGenerate.ok) {
-            throw new Error(`Error`);
+            logger.error('Error contacting to Ollama');
+            res.status(500).json({ message: 'Server error', status: 'INTERNAL_SERVER_ERROR' });
         }
 
         res.contentType('application/json');
@@ -194,19 +216,21 @@ async function processImageRequest(req, res) {
             const responseInsert = await saveResponse(auth, requestInsert.data.id, aggregatedResponse);
 
             if (responseInsert !== 200) {
-                throw ERROR;
+                logger.error('Error inserting the request in the database');
+                res.status(500).json({ message: 'Server error', status: 'INTERNAL_SERVER_ERROR' });
             }
             res.status(200).json({ message: 'Request processed successfully', aggregatedResponse });
         }
     } catch (error) {
         console.error(error);
         if (!res.headersSent) {
-            res.status(500).json({ error: 'Internal Server Error' });
+            logger.error('HTTP Error in maria/image endpoint', e);
+            res.status(500).json({ message: 'Server error', status: 'INTERNAL_SERVER_ERROR' });
         }
     }
 
 }
-// Save request to the database
+// Save request to the database || WORKING
 async function saveRequest(request_body, authorization) {
     const dbapi_insert_url = "http://127.0.0.1:8080/api/request/insert";
     const api_response = await fetch(dbapi_insert_url, {
@@ -225,7 +249,7 @@ async function saveRequest(request_body, authorization) {
 
     return api_response.json();
 }
-// Save response to the database
+// Save response to the database || WORKING
 async function saveResponse(access_key, id, text) {
     const dbapi_insert_url = "http://127.0.0.1:8080/api/response/insert";
     console.log(access_key);
@@ -250,10 +274,18 @@ async function saveResponse(access_key, id, text) {
     return 200;
 }
 
-// User login endpoint
+// User login endpoint || WORKING
 app.post('/api/maria/user/login', upload.single('file'), async function (req, res) {
     try {
         const request_body = req.body;
+        const clientIp = req.ip || req.connection.remoteAddress;
+
+        if (!('email' in request_body) || !('password' in request_body)) {
+            logger.warn(`Received request with invalid body from ${clientIp}`);
+            res.status(400).json({ message: 'Bad request', status: 'BAD_REQUEST' });
+            return;
+        }
+
         const loginUser = fetch('http://127.0.0.1:8080/api/user/login', {
             method: 'POST',
             headers: {
@@ -269,7 +301,6 @@ app.post('/api/maria/user/login', upload.single('file'), async function (req, re
             if (!response.ok) {
                 logger.error(`Validate user request returned error code: ${response.status}`);
                 res.send(response.json());
-                throw Error(`HTTP Error! Status: ${response.status}`);
             }
             return response.json();
         })
@@ -279,6 +310,6 @@ app.post('/api/maria/user/login', upload.single('file'), async function (req, re
             })
     } catch (e) {
         logger.error('HTTP Error in maria/iser/validate endpoint', e);
-        res.status(400);
+        res.status(500).json({ message: 'Server error', status: 'INTERNAL_SERVER_ERROR' });
     }
 });
