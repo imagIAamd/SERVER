@@ -177,6 +177,10 @@ async function processImageRequest(req, res) {
         const auth = req.header("Authorization");
         const requestInsert = await saveRequest(req.body, auth);
 
+        if (responseInsert.status !== 200) {
+            res.status(429).json({ message: 'Quote is at 0', status: 'Too Many Requests' }
+        }
+
         logger.info('Waiting for Ollama to respond');
         const responseGenerate = await fetch('http://192.168.1.14:11434/api/generate', {
             method: 'POST',
