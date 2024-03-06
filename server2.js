@@ -45,6 +45,7 @@ function shutDown() {
 
 // User registration endpoint || WORKING
 app.post('/api/maria/user/register', upload.single('file'), async function (req, res) {
+    logger.info("Received request on /api/maria/user/register");
     try {
         const request_body = req.body;
         const clientIp = req.ip || req.connection.remoteAddress;
@@ -103,6 +104,7 @@ app.post('/api/maria/user/register', upload.single('file'), async function (req,
 
 // User validation endpoint  || WORKING
 app.post('/api/maria/user/validate', upload.single('file'), async function (req, res) {
+    logger.info("Received request on /api/maria/user/validate");
     try {
         const request_body = req.body;
         const clientIp = req.ip || req.connection.remoteAddress;
@@ -144,6 +146,7 @@ app.post('/api/maria/user/validate', upload.single('file'), async function (req,
 // Insert image endpoint || WORKING
 app.post('/api/maria/image', upload.single('file'), processImageRequest);
 async function processImageRequest(req, res) {
+    logger.info("Received request on /api/maria/image");
     try {
         const request_body = req.body;
         const clientIp = req.ip || req.connection.remoteAddress;
@@ -280,6 +283,7 @@ async function saveResponse(access_key, id, text) {
 
 // User login endpoint || WORKING
 app.post('/api/maria/user/login', upload.single('file'), async function (req, res) {
+    logger.info("Received request on /api/maria/user/login");
     try {
         const request_body = req.body;
         const clientIp = req.ip || req.connection.remoteAddress;
@@ -320,6 +324,7 @@ app.post('/api/maria/user/login', upload.single('file'), async function (req, re
 
 // Get user list endpoint
 app.get('/api/maria/user/admin_get_list', upload.single('file'), async function (req, res) {
+    logger.info("Received request on /api/maria/user/admin_get_list");
     try {
         const auth = req.header("Authorization");
         const username = req.query.nickname || null;
@@ -361,6 +366,7 @@ app.get('/api/maria/user/admin_get_list', upload.single('file'), async function 
 });
 
 app.post('/api/maria/user/admin_change_plan', upload.single('file'), async function (req, res) {
+    logger.info("Received request on /api/maria/user/admin_change_plan");
     try {
         const request_body = req.body;
         const clientIp = req.ip || req.connection.remoteAddress;
