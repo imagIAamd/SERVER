@@ -3,7 +3,7 @@ const multer = require('multer');
 const winston = require('winston');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -129,7 +129,7 @@ app.post('/api/maria/user/validate', upload.single('file'), async function (req,
         validateUser.then(response => {
             if (!response.ok) {
                 logger.error(`Validate user request returned error code: ${response.status}`);
-                res.status(400).json(message: "Bad request", status: "BAD_REQUEST");
+                res.status(400).json({message: "Bad request", status: "BAD_REQUEST"});
                 return;
             }
             return response.json();
