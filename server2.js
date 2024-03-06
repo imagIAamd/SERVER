@@ -130,6 +130,7 @@ app.post('/api/maria/user/validate', upload.single('file'), async function (req,
             if (!response.ok) {
                 logger.error(`Validate user request returned error code: ${response.status}`);
                 res.send(response.json());
+                return;
             }
             return response.json();
         })
