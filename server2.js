@@ -313,3 +313,45 @@ app.post('/api/maria/user/login', upload.single('file'), async function (req, re
         res.status(500).json({ message: 'Server error', status: 'INTERNAL_SERVER_ERROR' });
     }
 });
+
+// Get user list endpoint
+app.get('/api/maria/user/admin_get_list', upload.single('file'), async function (req, res) {
+    try {
+        const auth = req.header("Authorization");
+        const username = req.query.nickname || null;
+        const password = req.query.limit || null;
+
+        let url = 'http://127.0.0.1:8080/api/user/admin_get_list';
+
+        if (username !== null) {
+            url += `?username=${encodeURIComponent(username)}`;
+        }
+
+        if (password !== null) {
+            url += username !== null ? '&' : '?';
+            url += `password=${encodeURIComponent(password)}`;
+        }
+
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': auth
+            }
+        });
+
+        if (!response.ok) {
+            logger.error(`Request user list request returned error code: ${response.status}`);
+            res.status(response.status).json({ error: 'Error in API request' });
+            return;
+        }
+
+        const data = await response.json();
+        logger.info(`Received API response: ${JSON.stringify(data)}`);
+        res.status(200).json(data);
+
+    } catch (e) {
+        logger.error('HTTP Error in maria/user/admin_get_list endpoint', e);
+        res.status(500).json({ message: 'Server error', status: 'INTERNAL_SERVER_ERROR' });
+    }
+});

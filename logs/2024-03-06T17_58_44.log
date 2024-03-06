@@ -1,0 +1,2 @@
+2024-03-06T17:58:44.903Z info: Listening for HTTP queries on: http://localhost:3000
+2024-03-06T17:58:57.507Z error: HTTP Error in maria/user/admin_get_list endpoint Cannot read properties of undefined (reading 'then')

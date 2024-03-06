@@ -1,0 +1,2 @@
+2024-03-06T17:57:46.670Z info: Listening for HTTP queries on: http://localhost:3000
+2024-03-06T17:57:53.033Z error: HTTP Error in maria/uiser/admin_get_list endpoint loginUser is not defined
