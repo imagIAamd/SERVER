@@ -1,0 +1,6 @@
+2024-03-06T19:52:10.908Z info: Listening for HTTP queries on: http://localhost:3000
+2024-03-06T19:52:35.286Z info: Received API response: [object Object]
+2024-03-06T19:52:40.494Z info: Received API response: [object Object]
+2024-03-06T19:52:48.688Z warn: Received request with invalid body from ::1
+2024-03-06T19:52:52.794Z info: Received API response: [object Object]
+2024-03-06T19:53:33.682Z info: Received kill signal, shutting down gracefully

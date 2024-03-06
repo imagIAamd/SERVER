@@ -3,7 +3,7 @@ const multer = require('multer');
 const winston = require('winston');
 
 const app = express();
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 3000;
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -352,6 +352,47 @@ app.get('/api/maria/user/admin_get_list', upload.single('file'), async function 
 
     } catch (e) {
         logger.error('HTTP Error in maria/user/admin_get_list endpoint', e);
+        res.status(500).json({ message: 'Server error', status: 'INTERNAL_SERVER_ERROR' });
+    }
+});
+
+app.post('/api/maria/user/admin_change_plan', upload.single('file'), async function (req, res) {
+    try {
+        const request_body = req.body;
+        const clientIp = req.ip || req.connection.remoteAddress;
+        const auth = req.header("Authorization");
+
+        if (!('phone_number' in request_body) || !('plan' in request_body)) {
+            logger.warn(`Received request with invalid body from ${clientIp}`);
+            res.status(400).json({ message: 'Bad request', status: 'BAD_REQUEST' });
+            return;
+        }
+
+        const loginUser = fetch('http://127.0.0.1:8080/api/user/admin_change_plan', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': auth
+            },
+            body: JSON.stringify({
+                'phone_number': request_body.phone_number,
+                'plan': request_body.plan
+            })
+        });
+
+        loginUser.then(response => {
+            if (!response.ok) {
+                logger.error(`Validate user request returned error code: ${response.status}`);
+                res.send(response.json());
+            }
+            return response.json();
+        })
+            .then(data => {
+                logger.info(`Received API response: ${data}`);
+                res.send(data);
+            })
+    } catch (e) {
+        logger.error('HTTP Error in maria/iser/validate endpoint', e);
         res.status(500).json({ message: 'Server error', status: 'INTERNAL_SERVER_ERROR' });
     }
 });
