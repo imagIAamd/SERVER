@@ -3,7 +3,7 @@ const multer = require('multer');
 const winston = require('winston');
 
 const app = express();
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 3000;
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -14,14 +14,17 @@ app.use(express.json({ limit: '10mb' }));
 
 // Winston configuration
 const logFormat = winston.format.combine(
+    winston.format.simple(),
     winston.format.timestamp(),
-    winston.format.json());
-
+    winston.format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
+);
+const timestamp = new Date().toISOString().replace(/:/g, '_').replace(/\..+/, '');
 const logger = winston.createLogger({
     level: 'info',
     format: logFormat,
     transports: [
-        new winston.transports.File({ filename: 'logs.log', level: 'info' })
+        new winston.transports.File({ filename: `./logs/${timestamp}.log`, level: 'info' }),
+        new winston.transports.Console()
     ]
 });
 

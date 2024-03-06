@@ -1,2 +1,6 @@
 {"level":"info","message":"Listening for HTTP queries on: http://localhost:3000","timestamp":"2024-03-04T14:41:11.297Z"}
 {"level":"info","message":"Received kill signal, shutting down gracefully","timestamp":"2024-03-04T14:41:26.890Z"}
+{"level":"info","message":"Listening for HTTP queries on: http://localhost:3000","timestamp":"2024-03-06T15:40:51.662Z"}
+{"level":"info","message":"Received kill signal, shutting down gracefully","timestamp":"2024-03-06T15:41:46.284Z"}
+2024-03-06T15:41:48.897Z info: Listening for HTTP queries on: http://localhost:3000
+2024-03-06T15:41:54.620Z info: Received kill signal, shutting down gracefully
