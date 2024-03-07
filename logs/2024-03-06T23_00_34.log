@@ -1,0 +1,8 @@
+2024-03-06T23:00:34.430Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-06T23:00:58.227Z info: Received request on /api/maria/user/register
+2024-03-06T23:01:01.278Z info: The SMS code is: 7019
+2024-03-06T23:01:01.314Z info: Received API response: [object Object]
+2024-03-06T23:01:07.607Z info: Received request on /api/maria/user/validate
+2024-03-06T23:01:07.634Z error: Validate user request returned error code: 400
+2024-03-06T23:01:07.636Z info: Received API response: undefined
+2024-03-06T23:03:59.491Z info: Received kill signal, shutting down gracefully

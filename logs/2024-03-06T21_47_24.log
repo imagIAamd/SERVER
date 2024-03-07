@@ -1,0 +1,4 @@
+2024-03-06T21:47:24.654Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-06T21:47:25.290Z info: Received API response: [object Object]
+2024-03-06T21:47:40.078Z info: Waiting for Ollama to respond
+2024-03-06T21:49:48.269Z info: Waiting for Ollama to respond

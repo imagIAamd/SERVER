@@ -1,0 +1,33 @@
+2024-03-06T23:05:03.906Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-06T23:05:20.148Z info: Received request on /api/maria/user/register
+2024-03-06T23:05:23.128Z info: The SMS code is: 7553
+2024-03-06T23:05:23.835Z info: Received API response: [object Object]
+2024-03-06T23:05:46.270Z info: Received request on /api/maria/user/validate
+2024-03-06T23:05:46.323Z info: Received API response: [object Object]
+2024-03-06T23:06:21.545Z info: Received request on /api/maria/image
+2024-03-06T23:06:21.546Z warn: Received request with invalid body from ::ffff:192.168.151.253
+2024-03-06T23:07:39.921Z info: Received request on /api/maria/user/register
+2024-03-06T23:07:42.841Z info: The SMS code is: 7583
+2024-03-06T23:07:42.865Z info: Received API response: [object Object]
+2024-03-06T23:07:50.371Z info: Received request on /api/maria/user/validate
+2024-03-06T23:07:50.393Z error: Validate user request returned error code: 400
+2024-03-06T23:07:50.394Z info: Received API response: undefined
+2024-03-06T23:09:29.763Z info: Received request on /api/maria/user/register
+2024-03-06T23:09:33.216Z info: The SMS code is: 2118
+2024-03-06T23:09:33.241Z info: Received API response: [object Object]
+2024-03-06T23:09:39.800Z info: Received request on /api/maria/user/validate
+2024-03-06T23:09:39.822Z error: Validate user request returned error code: 400
+2024-03-06T23:09:39.823Z info: Received API response: undefined
+2024-03-06T23:10:15.446Z info: Received request on /api/maria/user/register
+2024-03-06T23:10:18.908Z info: The SMS code is: 2198
+2024-03-06T23:10:19.011Z info: Received API response: [object Object]
+2024-03-06T23:10:30.461Z info: Received request on /api/maria/user/validate
+2024-03-06T23:10:30.494Z info: Received API response: [object Object]
+2024-03-06T23:10:38.646Z info: Received request on /api/maria/image
+2024-03-06T23:10:38.678Z info: Waiting for Ollama to respond
+2024-03-07T06:01:46.058Z info: Received request on /api/maria/user/login
+2024-03-07T06:01:46.215Z info: Received API response: [object Object]
+2024-03-07T06:01:46.442Z info: Received request on /api/maria/user/admin_get_list
+2024-03-07T06:01:47.097Z info: Received API response: {"data":[{"nickname":"admin","groups":["Administrator"],"phone_number":"-0","plan":"premium","email":"admin@admin"},{"nickname":"kilpepo","groups":["Premium user"],"phone_number":"688916185","plan":"premium","email":"juan@juan"},{"nickname":"alex","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex2","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex3","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex4","groups":["Administrator"],"phone_number":"-0","plan":"premium","email":"admin@admin"},{"nickname":"adaasd","groups":[],"phone_number":"6889161","plan":"free","email":"asdasdasd"},{"nickname":"kilpepo","groups":[],"phone_number":"002153","plan":"free","email":"juan@juan"}],"message":"OK","status":"OK"}
+2024-03-07T06:01:58.494Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:01:58.709Z error: Validate user request returned error code: 500

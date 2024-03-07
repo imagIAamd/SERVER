@@ -1,0 +1,2 @@
+2024-03-06T19:58:28.494Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-06T19:59:32.321Z error: Validate user request returned error code: 500

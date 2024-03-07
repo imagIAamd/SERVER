@@ -1,0 +1,31 @@
+2024-03-07T15:26:06.986Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-07T15:28:37.590Z info: Received request on /api/maria/user/register
+2024-03-07T15:28:40.584Z info: The SMS code is: 4215
+2024-03-07T15:28:40.953Z info: Received API response: [object Object]
+2024-03-07T15:28:54.905Z info: Received request on /api/maria/user/validate
+2024-03-07T15:28:54.975Z info: Received API response: [object Object]
+2024-03-07T15:29:03.867Z info: Received request on /api/maria/image
+2024-03-07T15:29:04.668Z info: Waiting for Ollama to respond
+2024-03-07T15:29:06.814Z info: recevied request_id: [object Object]
+2024-03-07T15:29:06.815Z info: authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MDk4Njg1MzQsInVzZXJJZCI6MjcsImlhdCI6MTcwOTgyNTMzNH0.jhoQxe-OksjkPEDNdJ7KnvowfmaVH_spodY-UdMaPkU
+2024-03-07T15:29:22.126Z info: Received request on /api/maria/image
+2024-03-07T15:29:22.777Z info: Waiting for Ollama to respond
+2024-03-07T15:29:24.682Z info: recevied request_id: [object Object]
+2024-03-07T15:29:24.682Z info: authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MDk4Njg1MzQsInVzZXJJZCI6MjcsImlhdCI6MTcwOTgyNTMzNH0.jhoQxe-OksjkPEDNdJ7KnvowfmaVH_spodY-UdMaPkU
+2024-03-07T15:29:45.948Z info: Received request on /api/maria/user/login
+2024-03-07T15:29:45.978Z error: Validate user request returned error code: 401
+2024-03-07T15:29:45.980Z info: Received API response: undefined
+2024-03-07T15:30:12.980Z info: Received request on /api/maria/user/login
+2024-03-07T15:30:13.000Z error: Validate user request returned error code: 401
+2024-03-07T15:30:13.002Z info: Received API response: undefined
+2024-03-07T15:30:34.121Z info: Received request on /api/maria/user/login
+2024-03-07T15:30:34.208Z info: Received API response: [object Object]
+2024-03-07T15:30:38.171Z info: Received request on /api/maria/user/admin_get_list
+2024-03-07T15:30:38.745Z info: Received API response: {"data":[{"nickname":"alex","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex2","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex3","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex4","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"adaasd","groups":[],"phone_number":"6889161","plan":"free","email":"asdasdasd"},{"nickname":"kilpepo","groups":[],"phone_number":"002153","plan":"free","email":"juan@juan"},{"nickname":"admin","groups":[],"phone_number":"o7","plan":"free","email":"admin@admin"},{"nickname":"kilpepo","groups":["Premium user"],"phone_number":"0","plan":"premium","email":"juan@juan"},{"nickname":"123","groups":[],"phone_number":"688916185","plan":"free","email":"123"},{"nickname":"123","groups":[],"phone_number":"1","plan":"free","email":"123"},{"nickname":"123","groups":[],"phone_number":"1","plan":"free","email":"123"},{"nickname":"xjxchjdh","groups":[],"phone_number":"620743774","plan":"free","email":"jdhjfh"},{"nickname":"fsfffd","groups":[],"phone_number":"644306702","plan":"free","email":"mdfmfh"},{"nickname":"jfhjdh","groups":[],"phone_number":"375454","plan":"free","email":"jshjfhj"},{"nickname":"dani","groups":["Administrator"],"phone_number":"dani","plan":"premium","email":"null"},{"nickname":"dani","groups":[],"phone_number":"dani","plan":"free","email":"null"},{"nickname":"dani","groups":[],"phone_number":"dani","plan":"free","email":"null"},{"nickname":"prueba","groups":[],"phone_number":"605937104","plan":"free","email":"prueba@gmail.com"}],"message":"OK","status":"OK"}
+2024-03-07T15:30:53.540Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T15:30:53.871Z info: Received API response: [object Object]
+2024-03-07T15:38:32.703Z info: Received request on /api/maria/image
+2024-03-07T15:38:32.735Z info: Waiting for Ollama to respond
+2024-03-07T15:39:03.335Z info: Received request on /api/maria/image
+2024-03-07T15:39:03.350Z info: Waiting for Ollama to respond
+2024-03-07T15:44:08.306Z info: Received kill signal, shutting down gracefully

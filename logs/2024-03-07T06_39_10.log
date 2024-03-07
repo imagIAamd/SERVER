@@ -1,0 +1,116 @@
+2024-03-07T06:39:10.804Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-07T06:39:15.562Z info: Received request on /api/maria/user/login
+2024-03-07T06:39:15.664Z info: Received API response: [object Object]
+2024-03-07T06:39:37.957Z info: Received request on /api/maria/user/login
+2024-03-07T06:39:38.016Z info: Received API response: [object Object]
+2024-03-07T06:39:56.757Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:39:56.785Z error: Validate user request returned error code: 401
+2024-03-07T06:39:56.786Z info: Received API response: undefined
+2024-03-07T06:44:01.538Z info: Received request on /api/maria/user/login
+2024-03-07T06:44:01.892Z error: Validate user request returned error code: 401
+2024-03-07T06:44:01.893Z info: Received API response: undefined
+2024-03-07T06:46:06.329Z info: Received request on /api/maria/user/login
+2024-03-07T06:46:06.698Z info: Received API response: [object Object]
+2024-03-07T06:46:43.303Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:46:44.285Z info: Received API response: [object Object]
+2024-03-07T06:46:49.777Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:46:49.954Z info: Received API response: [object Object]
+2024-03-07T06:46:53.985Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:46:54.422Z info: Received API response: [object Object]
+2024-03-07T06:46:57.985Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:46:58.241Z error: Validate user request returned error code: 400
+2024-03-07T06:46:58.252Z info: Received API response: undefined
+2024-03-07T06:47:00.185Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:47:00.239Z error: Validate user request returned error code: 400
+2024-03-07T06:47:00.240Z info: Received API response: undefined
+2024-03-07T06:47:01.479Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:47:01.545Z error: Validate user request returned error code: 400
+2024-03-07T06:47:01.546Z info: Received API response: undefined
+2024-03-07T06:47:19.522Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:47:19.569Z info: Received API response: [object Object]
+2024-03-07T06:47:24.697Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:47:25.017Z info: Received API response: [object Object]
+2024-03-07T06:47:27.899Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:47:27.961Z info: Received API response: [object Object]
+2024-03-07T06:47:28.824Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:47:28.960Z info: Received API response: [object Object]
+2024-03-07T06:47:29.922Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:47:29.987Z info: Received API response: [object Object]
+2024-03-07T06:47:30.647Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:47:30.703Z info: Received API response: [object Object]
+2024-03-07T06:47:32.379Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:47:32.602Z info: Received API response: [object Object]
+2024-03-07T06:47:35.357Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:47:35.580Z info: Received API response: [object Object]
+2024-03-07T06:47:36.231Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:47:36.268Z info: Received API response: [object Object]
+2024-03-07T06:47:36.894Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:47:36.930Z info: Received API response: [object Object]
+2024-03-07T06:47:37.590Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:47:37.624Z info: Received API response: [object Object]
+2024-03-07T06:48:08.220Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:48:08.262Z info: Received API response: [object Object]
+2024-03-07T06:48:12.553Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:48:12.757Z info: Received API response: [object Object]
+2024-03-07T06:50:41.878Z info: Received request on /api/maria/user/login
+2024-03-07T06:50:41.920Z info: Received API response: [object Object]
+2024-03-07T06:50:42.245Z info: Received request on /api/maria/user/admin_get_list
+2024-03-07T06:50:42.427Z info: Received API response: {"data":[{"nickname":"kilpepo","groups":[],"phone_number":"688916185","plan":"free","email":"juan@juan"},{"nickname":"alex","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex2","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex3","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex4","groups":["Administrator"],"phone_number":"-0","plan":"premium","email":"admin@admin"},{"nickname":"adaasd","groups":["Premium user"],"phone_number":"6889161","plan":"premium","email":"asdasdasd"},{"nickname":"kilpepo","groups":[],"phone_number":"002153","plan":"free","email":"juan@juan"},{"nickname":"admin","groups":["Administrator"],"phone_number":"o7","plan":"premium","email":"admin@admin"}],"message":"OK","status":"OK"}
+2024-03-07T06:50:48.768Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:50:48.997Z info: Received API response: [object Object]
+2024-03-07T06:50:51.703Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:50:51.945Z info: Received API response: [object Object]
+2024-03-07T06:50:54.001Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:50:54.108Z info: Received API response: [object Object]
+2024-03-07T06:51:19.368Z info: Received request on /api/maria/user/login
+2024-03-07T06:51:19.390Z info: Received API response: [object Object]
+2024-03-07T06:51:19.511Z info: Received request on /api/maria/user/admin_get_list
+2024-03-07T06:51:19.621Z info: Received API response: {"data":[{"nickname":"kilpepo","groups":["Premium user"],"phone_number":"688916185","plan":"premium","email":"juan@juan"},{"nickname":"alex","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex2","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex3","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex4","groups":["Administrator"],"phone_number":"-0","plan":"premium","email":"admin@admin"},{"nickname":"adaasd","groups":["Premium user"],"phone_number":"6889161","plan":"premium","email":"asdasdasd"},{"nickname":"kilpepo","groups":[],"phone_number":"002153","plan":"free","email":"juan@juan"},{"nickname":"admin","groups":["Administrator"],"phone_number":"o7","plan":"premium","email":"admin@admin"}],"message":"OK","status":"OK"}
+2024-03-07T06:52:41.950Z info: Received request on /api/maria/user/login
+2024-03-07T06:52:42.033Z info: Received API response: [object Object]
+2024-03-07T06:52:42.230Z info: Received request on /api/maria/user/admin_get_list
+2024-03-07T06:52:42.334Z info: Received API response: {"data":[{"nickname":"kilpepo","groups":["Premium user"],"phone_number":"688916185","plan":"premium","email":"juan@juan"},{"nickname":"alex","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex2","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex3","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex4","groups":["Administrator"],"phone_number":"-0","plan":"premium","email":"admin@admin"},{"nickname":"adaasd","groups":["Premium user"],"phone_number":"6889161","plan":"premium","email":"asdasdasd"},{"nickname":"kilpepo","groups":[],"phone_number":"002153","plan":"free","email":"juan@juan"},{"nickname":"admin","groups":["Administrator"],"phone_number":"o7","plan":"premium","email":"admin@admin"}],"message":"OK","status":"OK"}
+2024-03-07T06:52:44.997Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:52:45.164Z info: Received API response: [object Object]
+2024-03-07T06:53:02.664Z info: Received request on /api/maria/user/login
+2024-03-07T06:53:02.683Z info: Received API response: [object Object]
+2024-03-07T06:53:02.797Z info: Received request on /api/maria/user/admin_get_list
+2024-03-07T06:53:02.880Z info: Received API response: {"data":[{"nickname":"kilpepo","groups":[],"phone_number":"688916185","plan":"free","email":"juan@juan"},{"nickname":"alex","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex2","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex3","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex4","groups":["Administrator"],"phone_number":"-0","plan":"premium","email":"admin@admin"},{"nickname":"adaasd","groups":["Premium user"],"phone_number":"6889161","plan":"premium","email":"asdasdasd"},{"nickname":"kilpepo","groups":[],"phone_number":"002153","plan":"free","email":"juan@juan"},{"nickname":"admin","groups":["Administrator"],"phone_number":"o7","plan":"premium","email":"admin@admin"}],"message":"OK","status":"OK"}
+2024-03-07T06:53:05.484Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T06:53:05.742Z info: Received API response: [object Object]
+2024-03-07T07:01:42.544Z info: Received request on /api/maria/user/register
+2024-03-07T07:01:45.444Z info: The SMS code is: 9222
+2024-03-07T07:01:45.481Z info: Received API response: [object Object]
+2024-03-07T07:01:59.679Z info: Received request on /api/maria/user/validate
+2024-03-07T07:01:59.700Z error: Validate user request returned error code: 400
+2024-03-07T07:01:59.701Z info: Received API response: undefined
+2024-03-07T07:02:45.547Z info: Received request on /api/maria/user/register
+2024-03-07T07:02:48.521Z info: The SMS code is: 5740
+2024-03-07T07:02:48.716Z info: Received API response: [object Object]
+2024-03-07T07:02:59.108Z info: Received request on /api/maria/user/validate
+2024-03-07T07:02:59.132Z info: Received API response: [object Object]
+2024-03-07T07:03:10.204Z info: Received request on /api/maria/image
+2024-03-07T07:03:10.286Z info: Waiting for Ollama to respond
+2024-03-07T07:04:52.813Z info: Received request on /api/maria/image
+2024-03-07T07:04:53.927Z info: Waiting for Ollama to respond
+2024-03-07T07:08:55.485Z info: Received request on /api/maria/user/register
+2024-03-07T07:08:58.420Z info: The SMS code is: 2879
+2024-03-07T07:08:58.709Z info: Received API response: [object Object]
+2024-03-07T07:09:11.171Z info: Received request on /api/maria/user/validate
+2024-03-07T07:09:11.233Z error: Validate user request returned error code: 400
+2024-03-07T07:09:11.250Z info: Received API response: undefined
+2024-03-07T07:12:29.811Z info: Received request on /api/maria/user/register
+2024-03-07T07:12:32.720Z info: The SMS code is: 2615
+2024-03-07T07:12:32.961Z info: Received API response: [object Object]
+2024-03-07T07:12:44.988Z info: Received request on /api/maria/user/validate
+2024-03-07T07:12:45.046Z error: Validate user request returned error code: 400
+2024-03-07T07:12:45.047Z info: Received API response: undefined
+2024-03-07T07:15:08.458Z info: Received request on /api/maria/user/register
+2024-03-07T07:15:11.581Z info: The SMS code is: 4527
+2024-03-07T07:15:12.237Z info: Received API response: [object Object]
+2024-03-07T07:15:18.844Z info: Received request on /api/maria/user/validate
+2024-03-07T07:15:18.910Z error: Validate user request returned error code: 500
+2024-03-07T07:15:18.911Z info: Received API response: undefined
+2024-03-07T07:17:54.281Z info: Received request on /api/maria/user/register
+2024-03-07T07:17:57.246Z info: The SMS code is: 1276
+2024-03-07T07:17:57.560Z error: Register user request returned error code: 400

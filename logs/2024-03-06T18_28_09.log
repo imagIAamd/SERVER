@@ -1,0 +1,17 @@
+2024-03-06T18:28:09.993Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-06T18:30:37.350Z info: Received API response: {"data":[{"nickname":"admin","groups":["Administrator"],"phone_number":"-0","plan":"premium","email":"admin@admin"}],"message":"OK","status":"OK"}
+2024-03-06T18:39:22.084Z info: Received API response: [object Object]
+2024-03-06T18:39:22.565Z info: Received API response: {"data":[{"nickname":"admin","groups":["Administrator"],"phone_number":"-0","plan":"premium","email":"admin@admin"}],"message":"OK","status":"OK"}
+2024-03-06T18:41:04.016Z error: Request user list request returned error code: 401
+2024-03-06T18:41:26.710Z info: Received API response: {"data":[{"nickname":"admin","groups":["Administrator"],"phone_number":"-0","plan":"premium","email":"admin@admin"}],"message":"OK","status":"OK"}
+2024-03-06T18:42:12.258Z warn: Received request with invalid body from ::ffff:192.168.151.253
+2024-03-06T18:42:32.165Z info: The SMS code is: 8620
+2024-03-06T18:42:32.537Z info: Received API response: [object Object]
+2024-03-06T18:43:06.111Z info: Received API response: [object Object]
+2024-03-06T18:43:09.979Z info: Received API response: {"data":[{"nickname":"admin","groups":["Administrator"],"phone_number":"-0","plan":"premium","email":"admin@admin"},{"nickname":"kilpepo","phone_number":"688916185","email":"juan@juan"}],"message":"OK","status":"OK"}
+2024-03-06T18:43:10.796Z info: Received API response: [object Object]
+2024-03-06T18:43:16.990Z error: Request user list request returned error code: 401
+2024-03-06T18:43:43.681Z info: Received API response: {"data":[{"nickname":"admin","groups":["Administrator"],"phone_number":"-0","plan":"premium","email":"admin@admin"},{"nickname":"kilpepo","phone_number":"688916185","email":"juan@juan"}],"message":"OK","status":"OK"}
+2024-03-06T18:44:27.865Z info: Received API response: [object Object]
+2024-03-06T18:44:32.184Z info: Received API response: {"data":[{"nickname":"admin","groups":["Administrator"],"phone_number":"-0","plan":"premium","email":"admin@admin"},{"nickname":"kilpepo","phone_number":"688916185","email":"juan@juan"}],"message":"OK","status":"OK"}
+2024-03-06T18:46:30.454Z info: Received kill signal, shutting down gracefully

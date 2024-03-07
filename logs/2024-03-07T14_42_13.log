@@ -1,0 +1,17 @@
+2024-03-07T14:42:13.133Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-07T14:42:19.511Z info: Received request on /api/maria/user/login
+2024-03-07T14:42:19.955Z info: Received API response: [object Object]
+2024-03-07T14:42:23.246Z info: Received request on /api/maria/user/admin_get_list
+2024-03-07T14:42:24.112Z info: Received API response: {"data":[{"nickname":"alex","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex2","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex3","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"alex4","groups":[],"phone_number":"-0","plan":"free","email":"admin@admin"},{"nickname":"adaasd","groups":[],"phone_number":"6889161","plan":"free","email":"asdasdasd"},{"nickname":"kilpepo","groups":[],"phone_number":"002153","plan":"free","email":"juan@juan"},{"nickname":"admin","groups":[],"phone_number":"o7","plan":"free","email":"admin@admin"},{"nickname":"kilpepo","groups":[],"phone_number":"0","plan":"free","email":"juan@juan"},{"nickname":"123","groups":[],"phone_number":"688916185","plan":"free","email":"123"},{"nickname":"123","groups":[],"phone_number":"1","plan":"free","email":"123"},{"nickname":"123","groups":[],"phone_number":"1","plan":"free","email":"123"},{"nickname":"xjxchjdh","groups":[],"phone_number":"620743774","plan":"free","email":"jdhjfh"},{"nickname":"fsfffd","groups":[],"phone_number":"644306702","plan":"free","email":"mdfmfh"},{"nickname":"jfhjdh","groups":[],"phone_number":"375454","plan":"free","email":"jshjfhj"},{"nickname":"dani","groups":["Administrator"],"phone_number":"dani","plan":"premium","email":"null"},{"nickname":"dani","groups":[],"phone_number":"dani","plan":"free","email":"null"},{"nickname":"dani","groups":[],"phone_number":"dani","plan":"free","email":"null"}],"message":"OK","status":"OK"}
+2024-03-07T14:42:43.319Z info: Received request on /api/maria/user/register
+2024-03-07T14:42:46.263Z info: The SMS code is: 3346
+2024-03-07T14:42:46.688Z info: Received API response: [object Object]
+2024-03-07T14:42:53.921Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T14:42:54.342Z info: Received API response: [object Object]
+2024-03-07T14:42:59.866Z info: Received request on /api/maria/user/validate
+2024-03-07T14:42:59.901Z info: Received API response: [object Object]
+2024-03-07T14:43:27.862Z info: Received request on /api/maria/image
+2024-03-07T14:43:28.529Z info: Waiting for Ollama to respond
+2024-03-07T14:45:15.749Z info: Received request on /api/maria/image
+2024-03-07T14:45:16.163Z info: Waiting for Ollama to respond
+2024-03-07T14:45:57.091Z info: Received kill signal, shutting down gracefully

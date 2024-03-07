@@ -1,0 +1,4 @@
+2024-03-07T14:29:17.571Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-07T14:29:17.944Z info: Received request on /api/maria/user/admin_change_plan
+2024-03-07T14:29:17.995Z info: Received request on /api/maria/user/register
+2024-03-07T14:29:18.061Z error: Validate user request returned error code: 500

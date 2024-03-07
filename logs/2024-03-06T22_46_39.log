@@ -1,0 +1,6 @@
+2024-03-06T22:46:39.046Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-06T22:49:54.615Z info: Received request on /api/maria/user/register
+2024-03-06T22:49:57.647Z info: The SMS code is: 7326
+2024-03-06T22:49:57.707Z info: Received API response: [object Object]
+2024-03-06T22:50:12.656Z info: Received request on /api/maria/user/validate
+2024-03-06T22:50:12.690Z error: Validate user request returned error code: 400

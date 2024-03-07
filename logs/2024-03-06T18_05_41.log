@@ -1,0 +1,14 @@
+2024-03-06T18:05:41.394Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-06T18:14:21.677Z info: Received API response: [object Object]
+2024-03-06T18:16:33.448Z info: Received API response: [object Object]
+2024-03-06T18:16:38.727Z info: Received API response: {"data":[{"nickname":"admin","phone_number":"-0","email":"admin@admin"},{"nickname":"kilpepo","phone_number":"688916195","email":"juan@juan"},{"nickname":"jehe","phone_number":"605937104","email":"heyej"}],"message":"OK","status":"OK"}
+2024-03-06T18:17:56.257Z info: Received API response: [object Object]
+2024-03-06T18:18:00.175Z info: Received API response: {"data":[{"nickname":"admin","phone_number":"-0","email":"admin@admin"},{"nickname":"kilpepo","phone_number":"688916195","email":"juan@juan"},{"nickname":"jehe","phone_number":"605937104","email":"heyej"}],"message":"OK","status":"OK"}
+2024-03-06T18:19:05.798Z info: Received API response: [object Object]
+2024-03-06T18:19:09.486Z info: Received API response: {"data":[{"nickname":"admin","phone_number":"-0","email":"admin@admin"},{"nickname":"kilpepo","phone_number":"688916195","email":"juan@juan"},{"nickname":"jehe","phone_number":"605937104","email":"heyej"}],"message":"OK","status":"OK"}
+2024-03-06T18:21:48.318Z error: Request user list request returned error code: 401
+2024-03-06T18:22:11.379Z error: Request user list request returned error code: 401
+2024-03-06T18:22:50.698Z info: Received API response: [object Object]
+2024-03-06T18:23:16.482Z info: Received API response: {"data":[{"nickname":"admin","phone_number":"-0","email":"admin@admin"},{"nickname":"kilpepo","phone_number":"688916195","email":"juan@juan"},{"nickname":"jehe","phone_number":"605937104","email":"heyej"}],"message":"OK","status":"OK"}
+2024-03-06T18:27:23.162Z warn: Received request with invalid body from ::ffff:192.168.151.253
+2024-03-06T18:27:54.486Z info: Received kill signal, shutting down gracefully

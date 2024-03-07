@@ -1,0 +1,4 @@
+2024-03-07T14:47:06.724Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-07T14:47:15.797Z info: Received request on /api/maria/image
+2024-03-07T14:47:16.445Z info: Waiting for Ollama to respond
+2024-03-07T14:47:31.574Z info: Received kill signal, shutting down gracefully

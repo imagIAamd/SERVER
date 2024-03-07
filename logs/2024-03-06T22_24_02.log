@@ -1,0 +1,12 @@
+2024-03-06T22:24:02.502Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-06T22:24:06.119Z info: Received request on /api/maria/user/validate
+2024-03-06T22:24:06.697Z info: Received API response: [object Object]
+2024-03-06T22:24:31.716Z info: Received request on /api/maria/user/validate
+2024-03-06T22:24:31.767Z info: Received API response: [object Object]
+2024-03-06T22:26:15.065Z info: Received request on /api/maria/image
+2024-03-06T22:26:15.200Z info: Waiting for Ollama to respond
+2024-03-06T22:46:06.304Z info: Received request on /api/maria/user/register
+2024-03-06T22:46:09.204Z info: The SMS code is: 6430
+2024-03-06T22:46:09.232Z info: Received API response: [object Object]
+2024-03-06T22:46:20.916Z info: Received request on /api/maria/user/validate
+2024-03-06T22:46:20.943Z error: Validate user request returned error code: 400

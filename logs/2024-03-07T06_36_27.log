@@ -1,0 +1,3 @@
+2024-03-07T06:36:27.788Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-07T06:38:15.623Z info: Received request on /api/maria/user/login
+2024-03-07T06:38:15.756Z error: Validate user request returned error code: 401

@@ -1,0 +1,10 @@
+2024-03-07T07:23:50.293Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-07T07:23:54.461Z info: Received request on /api/maria/user/register
+2024-03-07T07:23:55.749Z info: Received request on /api/maria/user/register
+2024-03-07T07:23:57.509Z info: The SMS code is: 2331
+2024-03-07T07:23:57.825Z info: Received API response: [object Object]
+2024-03-07T07:24:00.966Z info: Received request on /api/maria/user/validate
+2024-03-07T07:24:00.997Z error: Validate user request returned error code: 500
+2024-03-07T07:24:00.998Z info: Received API response: undefined
+2024-03-07T07:24:01.803Z info: The SMS code is: 7629
+2024-03-07T07:24:01.830Z error: Register user request returned error code: 400

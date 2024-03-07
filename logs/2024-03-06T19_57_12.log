@@ -1,0 +1,3 @@
+2024-03-06T19:57:12.092Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-06T19:57:41.957Z info: Received API response: [object Object]
+2024-03-06T19:57:54.304Z error: Validate user request returned error code: 500

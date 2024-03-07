@@ -1,0 +1,2 @@
+2024-03-06T19:55:57.080Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-06T19:56:18.321Z error: Validate user request returned error code: 401

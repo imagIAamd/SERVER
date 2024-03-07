@@ -171,7 +171,7 @@ async function processImageRequest(req, res) {
         const requestBody = {
             model: "llava",
             images: images,
-            prompt: "Describe the images"
+            prompt: "Describe the images in spanish"
         };
 
         const requestBodyJSON = JSON.stringify(requestBody);
@@ -180,8 +180,8 @@ async function processImageRequest(req, res) {
 
         const auth = req.header("Authorization");
         const requestInsert = await saveRequest(req.body, auth);
-
-        if (requestInsert.status !== 200) {
+	console.log(requestInsert.status);
+        if (requestInsert.status !== 'OK') {
             res.status(429).json({ message: 'Quote is at 0', status: 'Too Many Requests' });
         }
 

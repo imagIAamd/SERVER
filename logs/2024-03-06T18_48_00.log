@@ -1,0 +1,7 @@
+2024-03-06T18:48:00.616Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-06T18:48:03.295Z error: Request user list request returned error code: 401
+2024-03-06T18:48:03.342Z error: Request user list request returned error code: 401
+2024-03-06T18:48:08.467Z error: Request user list request returned error code: 401
+2024-03-06T18:48:17.615Z info: Received API response: [object Object]
+2024-03-06T18:48:29.854Z info: Received API response: {"data":[{"nickname":"admin","groups":["Administrator"],"phone_number":"-0","plan":"premium","email":"admin@admin"},{"nickname":"kilpepo","groups":[],"phone_number":"688916185","plan":"free","email":"juan@juan"}],"message":"OK","status":"OK"}
+2024-03-06T19:54:07.021Z info: Received kill signal, shutting down gracefully

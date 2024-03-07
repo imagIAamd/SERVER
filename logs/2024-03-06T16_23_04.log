@@ -1,0 +1,18 @@
+2024-03-06T16:23:04.567Z info: Listening for HTTP queries on: http://localhost:80
+2024-03-06T16:24:09.899Z info: The SMS code is: 4649
+2024-03-06T16:24:10.729Z info: Received API response: [object Object]
+2024-03-06T16:26:55.256Z warn: Received request with invalid body from ::ffff:192.168.151.253
+2024-03-06T17:08:40.731Z info: The SMS code is: 1318
+2024-03-06T17:08:40.948Z info: Received API response: [object Object]
+2024-03-06T17:08:43.047Z info: The SMS code is: 8765
+2024-03-06T17:08:43.068Z info: Received API response: [object Object]
+2024-03-06T17:08:46.694Z info: The SMS code is: 3856
+2024-03-06T17:08:46.711Z info: Received API response: [object Object]
+2024-03-06T17:08:48.388Z info: The SMS code is: 5825
+2024-03-06T17:08:48.405Z info: Received API response: [object Object]
+2024-03-06T17:08:52.626Z info: Received API response: [object Object]
+2024-03-06T17:09:11.285Z warn: Received request with invalid body from ::ffff:192.168.151.253
+2024-03-06T17:09:35.087Z warn: Received request with invalid body from ::ffff:192.168.151.253
+2024-03-06T17:10:24.671Z info: The SMS code is: 9246
+2024-03-06T17:10:24.692Z info: Received API response: [object Object]
+2024-03-06T17:10:31.226Z error: Validate user request returned error code: 400
