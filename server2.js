@@ -226,6 +226,7 @@ async function processImageRequest(req, res) {
             if (responseInsert !== 200) {
                 logger.error('Error inserting the request in the database');
                 res.status(500).json({ message: 'Server error', status: 'INTERNAL_SERVER_ERROR' });
+                return;
             }
             res.status(200).json({ message: 'Request processed successfully', aggregatedResponse });
         }
@@ -395,6 +396,7 @@ app.post('/api/maria/user/admin_change_plan', upload.single('file'), async funct
             if (!response.ok) {
                 logger.error(`Validate user request returned error code: ${response.status}`);
                 res.send(response.json());
+                return;
             }
             return response.json();
         })
